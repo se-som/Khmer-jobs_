@@ -1,0 +1,34 @@
+<table  class="table table-striped table-hover">
+    <tr>
+        <th>job title</th>
+        <th>job category</th>
+        <th>job deadline</th>
+   </tr>
+<?php
+foreach ($com as $d){
+}
+$session_id = $d->com_id;
+foreach ($jobs as $job) { 
+   $com_id = $job->getJcat()->getCom()->getComId();
+   if($session_id == $com_id){
+    echo '<tr>';
+	echo'<td>'. $job->getJobTitle().'</td>';  
+	echo'<td>'.($job->getJcat()->getCat()->getCatName()).'</td>';
+        echo'<td>'. $job->getJobDeadline().'</td>'; 
+        echo '<td><a href="' . $this->url('home/action', array('action' => 'edit', 'id' =>$job->getJobId())) . '" class="icon-pencil-2"></a></td>';
+        echo '<td><input class="url" type="hidden" value="'.$this->url('home',array('action'=>'delete','id'=>$job->getJcat()->getJcatId())).' " />  <a href="delete/'.$job->getJcat()->getJcatId().'" class="icon-remove deleteIcon"> </a> </td>';       
+        echo '<td><a href= "'. $this->url('home/action', array('action'=> 'detail', 'id' =>$job->getJobId())) . ' ">detail</a></td>';
+        echo '</tr>';
+   }
+  }
+?>
+</table>
+<script type="text/javascript">
+	jQuery(document).ready(function (){
+		jQuery('.deleteIcon').click(function (){
+			var url = jQuery(this).parent().find('.url').val();
+			jQuery('#linkDelete').attr('href', url);
+			jQuery('#deleteConfirmation').modal('');
+		});
+	});
+</script>

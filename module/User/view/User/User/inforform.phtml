@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <script type="text/javascript">
+            function experiencesform(){
+              
+                data="<form method='post' action="+'insert'+">\n\
+                        Company Name<br>\n\
+                       <input type='text' name='pos_company' id='pos_company'><br>\n\
+                        Title<br>\n\
+                        <input type='text' name='pos_title' id='pos_title'><br>\n\
+                        Location<br>\n\
+                        <input type='text' name='pos_location' id='pos_location'><br>\n\
+                        Time<br>\n\
+                        <input type='date' name='pos_sd' id='pos_sd'> To <input type='date' name='pos_ed' id='pos_ed'><br>\n\
+                        Description<br>\n\
+                        <textarea cols='10' rows='5' name='pos_summary' id='pos_summary'></textarea><br>\n\
+                        <input type='submit' value='Save' onClick='showpos()'><input type='reset' value='Cancel'>\n\
+                        </form>\n\
+                ";
+               document.getElementById('experiences').innerHTML=data;
+            }
+            
+            function showpos(){
+                pos_name = document.getElementById('pos_name').value;
+                pos_title = document.getElementById('pos_title').value;
+                pos_location = document.getElementById('pos_location').value;
+                pos_sd = document.getElementById('pos_sd').value;
+                pos_ed = document.getElementById('pos_ed').value;
+                pos_des= document.getElementById('pos_des').value;
+                data = "<b>"+pos_name+"</b><br>\n\
+                        "+pos_title+"<br>\n\
+                        "+pos_location+"<br>\n\
+                        "+pos_sd+" To "+pos_ed+"<br>\n\
+                        "+pos_des+"\n\
+                        ";
+              
+              document.getElementById('experiences').innerHTML=data;
+            }
+            
+            function education(){
+                data="  <form>\n\
+                        School<br>\n\
+                        <input type='text' name='edu_schoolName' id='edu_schoolName'><br>\n\
+                        Date<br>\n\
+                        <input type='date' name='edu_sd' id='edu_sd'> To <input type='date' name='edu_ed' id='edu_ed'><br>\n\
+                        Degree<br>\n\
+                        <input type='text' name='edu_degree' id='edu_degree'><br>\n\
+                        Field Of Study<br>\n\
+                        <input type='text' name='edi_fieldOfStudy' id='fieldOfStudy'><br>\n\
+                        Grad<br>\n\
+                        <input type='text' name='edu_grad' id='edu_grad'><br>\n\
+                        Activities and Societies<br>\n\
+                        <textarea cols='10' rows='5' id='edu_activities' name='edu_activities'></textarea><br>\n\
+                        Description<br>\n\
+                        <textarea cols='10' rows='5' id='edu_des' name='edu_des'></textarea><br>\n\
+                        <input type='submit' value='Save' '><input type='reset' value='Cancel'>\n\
+                        </form>";
+                 document.getElementById('edu_field').innerHTML=data;
+            }
+           
+        </script>
+    </head>
+    <body>
+        <form>
+            <img src="./images/profile.png" style="width: 100px; height: 100px;" id="img" name="img"><br><br>
+            <input type="text" id="last_name" name="last_name" value="Last Name" onfocus="javascript: if(this.value == 'Last Name'){ this.value = ''; }" onblur="javascript: if(this.value==''){this.value='Last Name';}" />
+            <input type="text" id="first_name" name="first_name" value="First Name" onfocus="javascript: if(this.value == 'First Name'){ this.value = ''; }" onblur="javascript: if(this.value==''){this.value='First Name';}" />
+            <hr width="600px">
+            <h2>EXPERIENCES</h2>
+            <a onClick="experiencesform()"><h4> Add Experiences</h4></a>
+            <div id="experiences"></div>
+            <div id="experiencesshow"></div>
+            <hr width="600px">
+            <h2>EDUCATION</h2>
+            <a onClick="education()"><h4>Add Education</h4></a>
+            <div id="edu_field"></div>
+            <hr width="600px">
+            <h2>ADDITIONAL INFORMATION</h2>
+            <input type="text" id="interest" name="interest" value="Interest" onfocus="javascript: if(this.value == 'Interest'){ this.value = ''; }" onblur="javascript: if(this.value==''){this.value='Interest';}" /><br>
+            <input type="text" id="dateOfBirth" name="dateOfBirth" value="Date Of Birth" onfocus="javascript: if(this.value == 'Date Of Birth'){ this.value = ''; }" onblur="javascript: if(this.value==''){this.value='Date Of Birth';}" />
+        </form> 
+    </body>
+</html>

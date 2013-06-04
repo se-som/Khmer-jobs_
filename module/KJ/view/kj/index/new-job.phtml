@@ -1,0 +1,95 @@
+<?php 
+
+foreach ($com as $d){
+
+    
+}
+$com_id =$d->com_id;
+?>
+
+<form class="form-horizontal" method="post" action="<?php echo $this->url('home/action', array('action' => 'createJobByForm')) ?>">
+    <fieldset>
+        
+        <div class="control-group">
+            <label class="control-label" for="inputEmail"></label>
+            <div class="controls">
+                <input type="hidden" name ="com_id" placeholder="company id…" value="<?php echo $com_id;  ?>">     
+            </div>
+        </div>
+            
+         <div class="control-group">
+            <label class="control-label" for="inputEmail">Title</label>
+            <div class="controls">   
+                <input type="text" name ="job_title" placeholder="job title…">
+            </div>
+        </div>
+            
+        <div class="control-group">
+            <label class="control-label" for="inputEmail">Category name</label>
+            <div class="controls">
+                <select name="cat_id">
+		 <?php foreach($categories as $c) {
+                            echo '<option value=' . $c->getCatId() . '>' . $c->getCatName(). '</option>';
+                    }
+		 ?>
+                </select>
+            </div>
+        </div>
+            
+        <div class="control-group">
+            <label class="control-label" for="inputEmail">Location</label>
+            <div class="controls">
+                <input type="text" name ="job_location" placeholder="job location…">
+            </div>
+        </div>
+            
+        <div class="control-group">
+            <label class="control-label" for="inputEmail">Salary</label>
+            <div class="controls">
+                <input type="text" name ="job_salary" placeholder="salary…">
+            </div>
+        </div>
+            
+        <div class="control-group">
+            <label class="control-label" for="inputEmail">Close date</label>
+            <div class="controls">
+                <input type="text" name="job_deadline" class="datepicker" placeholder="job deadline" data-date-format="yyyy-mm-dd">
+            </div>
+        </div>
+            
+        <div class="control-group">
+            <label class="control-label" for="inputEmail">Benefit</label>
+            <div class="controls">
+                <input type="text" name ="job_benefit" placeholder="benefit…">
+            </div>
+        </div>
+            
+        <div class="control-group">
+            <label class="control-label" for="inputEmail">About company</label>
+            <div class="controls">
+                <input type="text" name ="about_company" placeholder="About your company…">
+            </div>
+         </div>
+            
+        <div class="control-group">
+            <label class="control-label" for="inputEmail">Description</label>
+            <div class="controls">
+                <textarea rows="3" name="job_description" placeholder="job description…"></textarea>
+            </div>
+        </div>
+            
+        <div class="control-group">
+            <label class="control-label" for="inputEmail">How apply</label>
+            <div class="controls">
+                <textarea rows="3" name="job_apply" placeholder="how apply…"></textarea>
+            </div>
+        </div>
+            
+        <div class="control-group">
+            <label class="control-label" for="inputEmail"></label>
+            <div class="controls">
+                <button type="submit" class="btn">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

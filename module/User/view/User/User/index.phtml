@@ -1,0 +1,617 @@
+<?php
+$sess = isset($_GET['sess'])?$_GET['sess']:"";
+echo $sess;
+//var_dump($datas);
+?>
+<html>
+    <head>
+        <script type="text/javascript" src="http://platform.linkedin.com/in.js">
+            api_key: jfzqnuuz7z00
+            onLoad: onLinkedInLoad
+            scope: r_fullprofile,r_basicprofile
+        </script>
+
+    <input type="hidden">
+
+    <!-- NOTE: be sure to set onLoad: onLinkedInLoad -->
+    <script type="text/javascript">
+        function onLinkedInLoad() {
+            
+            IN.Event.on(IN, "auth", function() {onLinkedInLogin();});
+            IN.Event.on(IN, "logout", function() {onLinkedInLogout();});
+ 
+//              $('a[id*=li_ui_li_gen_]').css({marginBottom:'20px'}).html('<img src="./images/ln.jpg" height="31" width="200" border="0" />'); 
+        }
+        setLoginBadge(true);
+        function onLinkedInLogout() {
+            setLoginBadge(false);
+ 
+        }
+
+        function onLinkedInLogin() {
+            // we pass field selectors as a single parameter (array of strings)
+            IN.API.Profile("me")
+            .fields(["id", "firstName", "lastName","dateOfBirth","positions:(title,summary,startDate,endDate,company:(name))",
+                "educations:(schoolName,fieldOfStudy,startDate,endDate,degree,activities,notes)","skills","pictureUrl",
+                "interests"])
+            .result(function(result) {
+                setLoginBadge(result.values[0]);
+            })
+            .error(function(err) {
+                alert(err);
+            });
+        }
+        function logOut()
+        {	 
+             IN.User.logout();
+            document.getElementById('loginbadge').style.display='none';
+           
+//alert("hello");
+                  
+        }
+         
+        function setLoginBadge(profile) {
+//            profHTML = <p>ksaf</p>;
+           
+                            pos_title = new Array();
+                            pos_company = new Array();
+                            pos_date = new Array();
+                            pos_summary = new Array();
+                            edu_schoolName = new Array();
+                            edu_fieldOfStudy = new Array();
+                            edu_date = new Array();
+                            edu_degree = new Array();
+                            edu_activities = new Array();
+                            edu_notes = new Array();
+                            skill = new Array();
+                            id = profile.id;
+                            last_name = profile.lastName;
+                            first_name = profile.firstName;
+                            j=0;
+                            k=0;
+                            l=0;
+                            if(profile.positions !=null){
+                                 j=profile.positions._total;
+                            }
+                           if(profile.educations != null){
+                            k=profile.educations._total;
+                           }
+                           if(profile.skills != null){
+                               l=profile.skills._total;
+                           }
+                          
+                            if (!profile) {
+                                 profHTML = "<table>\n\
+                            <form method='post' action='insert'>\n\
+                            <tr>\n\
+                            <td colspan='2'><img src='http://static02.linkedin.com/scds/common/u/img/icon/icon_no_photo_80x80.png'>\n\
+                                <input type='text' id='sess' name='sess' value='<?php echo $sess;?>'></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td width='100px'>Upload Profile</td> <td>: <input type='file' id='pic_url' name='pic_url'></td>\n\
+                            </tr>\n\
+                            <input type='hidden' id='id' name='id'>\n\
+                            <tr>\n\
+                                <td width='100px'>First Name</td> <td>: <input type='text' id='first_name' name='first_name'></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td width='100px'>Last Name</td> <td>: <input type='text' id='last_name' name='last_name'></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                            <td colspan='2'><hr width='600px'></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                            <td colspan='2'><h2>EXPERIENCES</h2></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td width='100px'>Position</td> <td>: <input type='text' id='pos_title' name='pos_title'></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td width='100px'>Company</td> <td>: <input type='text' id='pos_company' name='pos_company'></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td width='100px'>Date</td> <td>: <input type='date' id='pos_date' name='pos_date'></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td width='100px'>Summary</td> <td>: <textarea width='400px' height='200px' id='pos_summary' name ='pos_summary'></textarea></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                            <td colspan='2'><hr width='600px'></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                            <td colspan='2'><h2>EDUCATION</h2></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td width='100px'>School Name</td> <td>: <input type='text' id='edu_schoolName' name='edu_schoolName'></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td width='100px'>Field Of Study</td> <td>: <input type='text' id='edu_fieldOfStudy' name='edu_fieldOfStudy'></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td width='100px'>Date</td> <td>: <input type='date' id='edu_date' name='edu_date'></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td width='100px'>Degree</td> <td>: <input type='text' id='edu_degree' name='edu_degree'></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td width='100px'>Activities</td> <td>: <textarea width='400px' height='200px' id='edu_activities' name='edu_activities'></textarea></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td width='100px'>Notes</td> <td>: <textarea width='400px' height='200px' id='edu_note' name='edu_note'></textarea></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                            <td colspan='2'><hr width='600px'></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                            <td colspan='2'><h2>ADDITIONAL INFORMATION</h2></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td width='100px'>Interest</td> <td>: <textarea width='400px' height='200px' id='interest' name='interest'></textarea></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td width='100px'>Date Of Birth</td> <td>: <input type='date' id='dateOfBirth' name='dateOfBirth'></td>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td width='100px'><input type='submit' value='SUBMIT' class='btn'></td>\n\
+                            </tr>\n\
+                        </form>\n\
+                    </table>";
+                            document.getElementById('loginbadge').style.display='block';
+                            document.getElementById('loginbadge').innerHTML=profHTML;
+                            }
+                            else {
+                                if(profile.dateOfBirth != null){
+                                    dateOfBirth = profile.dateOfBirth.day+"-"+profile.dateOfBirth.month+"-"+profile.dateOfBirth.year;
+                                }else{
+                                    dateOfBirth = '';
+                                }
+                                if(profile.interests != null){
+                                    interest = profile.interests;
+                                }else{
+                                    interest = "";
+                                }
+                                for(var i=0;i<l;i++){
+                                    skill[i] = profile.skills.values[i].skill.name;
+                                }  
+                                for (var i=0;i<j;i++){
+        
+                                    pos_title[i] = profile.positions.values[i].title;
+                                    pos_company[i] = profile.positions.values[i].company.name;
+                                    //alert(profile.positions.values[0].endDate);
+                                    if((profile.positions.values[i].startDate == null)&&(profile.positions.values[i].endDate != null)){
+                                        pos_date[i]="0/0/00-"+"0/"+profile.positions.values[i].endDate.month +"/"+profile.positions.values[i].endDate.year;
+                                    }else if((profile.positions.values[i].startDate != null)&&(profile.positions.values[i].endDate == null)){
+                                        pos_date[i]="0/"+profile.positions.values[i].startDate.month +"/"+ profile.positions.values[i].startDate.year+"-0/0/00";
+                                    }else if((profile.positions.values[i].startDate != null)&&(profile.positions.values[i].endDate != null)){
+                                        pos_date[i]="0/"+profile.positions.values[i].startDate.month +"/"+ profile.positions.values[i].startDate.year+"-0/"+profile.positions.values[i].endDate.month +"/"+profile.positions.values[i].endDate.year;
+                                    }else{
+                                        pos_date[i]="<i>Unknow</i>";
+                                    }
+                                    pos_summary[i] = profile.positions.values[i].summary;
+        
+                                }
+                                //education
+                                for(var i=0;i<k;i++){
+                                    edu_schoolName[i] = profile.educations.values[i].schoolName;
+                                    edu_fieldOfStudy[i] =profile.educations.values[i].fieldOfStudy;
+        
+                                    if((profile.educations.values[i].startDate == null)&&(profile.educations.values[i].endDate != null)){
+                                        edu_date[i] ="0/0/00-"+profile.educations.values[i].endDate.year;
+                                    }else if((profile.educations.values[i].endDate == null)&&(profile.educations.values[i].startDate != null)){
+                                        edu_date[i] =profile.educations.values[i].endDate.year+"-0/0/00";
+                                    }else if ((profile.educations.values[i].startDate != null)&&(profile.educations.values[i].endDate != null)){
+                                        edu_date[i] =profile.educations.values[i].startDate.year+"-"+profile.educations.values[i].endDate.year;
+                                    }else{
+                                        edu_date[i]="<i>Unknow</i>"
+                                    }
+        
+                                    edu_degree[i] =profile.educations.values[i].degree;
+                                    edu_activities[i] = profile.educations.values[i].activities;
+                                    edu_notes[i] =profile.educations.values[i].notes;
+                                }
+                                //additional info
+                                
+                                
+                                var pictureUrl = profile.pictureUrl || "http://static02.linkedin.com/scds/common/u/img/icon/icon_no_photo_80x80.png";
+     
+                                profHTML = "<p><button onClick=\"logOut();\">Logout</button><br><br>";
+////                                profHTML = profHTML +"<form onsubmit='"+logOut()+"'>;
+//                                profHTML = profHTML +"<a href=\"" + profile.publicProfileUrl + "\">";
+//                                profHTML = profHTML + "<img src=\"" + pictureUrl + "\"></a><br>";
+////                                profHTML = profHTML + first_name + " " + last_name;
+//                                profHTML = profHTML + "<hr width=600px align='left'>";
+//                                profHTML = profHTML + "<h2>EXPERIENCES</h2>";
+//                                for(var i=0;i<j;i++){
+//      
+//                                    profHTML = profHTML + "<b>"+pos_title[i]+"</b><br>";
+//                                    profHTML = profHTML + pos_company[i]+"<br>";
+//                                    profHTML = profHTML + "DATE : "+pos_date[i]+"<br>";
+//                                    profHTML = profHTML + "SUMMARY : <div style='width:550px; padding-left:40px;'>"+pos_summary[i]+"</div>";
+//                                    profHTML = profHTML +"<br>";
+//                                }
+//                                profHTML = profHTML + "<hr width=600px align='left'>";
+//                                profHTML = profHTML + "<h2>EDUCATION</h2>";
+//                                for(var i=0;i<k;i++){
+//                                    profHTML = profHTML + "<b>"+edu_schoolName[i]+"</b><br>";
+//                                    profHTML = profHTML + "FIELD OF STUDY : "+edu_fieldOfStudy[i]+"<br>";
+//                                    profHTML = profHTML + "DATE : "+edu_date[i]+"<br>";
+//                                    profHTML = profHTML + "DEGREE : "+edu_degree[i]+"<br>";
+//                                    profHTML = profHTML + "ACTIVITIES : <div style='width:550px; padding-left:40px;'>"+edu_activities[i]+"</div>";
+//                                    profHTML = profHTML + "NOTES : <div style='width:550px; padding-left:40px;'>"+edu_notes[i]+"</div>";
+//                                    profHTML = profHTML +"<br>";
+//                                }
+//                                profHTML = profHTML + "<hr width=600px align='left'>";
+//                                profHTML = profHTML + "<h2>ADDITIONAL INFORMATION</h2>";
+//                                profHTML = profHTML + "INTEREST : "+interest+"<br>";
+//                                profHTML = profHTML + "DATE OF BIRTH : "+dateOfBirth+"<br><br></p>";
+//                                profHTML = "";
+                                profHTML = profHTML + "<p><form method='post' onsubmit='logOut()' action="+'insert'+">";
+                                profHTML = profHTML + "<input type='hidden' id='pic_url' name='pic_url' value='"+pictureUrl+"'><br>";
+                                profHTML =profHTML + "<input type='hidden' id='id' name='id' value='"+id+"'><br>";
+                                profHTML = profHTML + "<input type='hidden' id='j' name='j' value='"+j+"'><br>";
+                                profHTML = profHTML + "<input type='hidden' id='k' name='k' value='"+k+"'><br>";
+                                profHTML = profHTML + "<input type='hidden' id='div_id' value='loginbadge'>";
+                                profHTML = profHTML + "<table>";
+                                profHTML = profHTML + "<tr>";
+                                profHTML = profHTML + "<td width='100px' colspan='2'><img src='"+pictureUrl+"'></td>";
+                                profHTML = profHTML + "</tr><tr>";
+                                profHTML =profHTML + "<td width='100px'>First Name</td><td>: <input type='text' id='first_name' name='first_name' value='"+first_name+"'></td>";
+                                profHTML = profHTML + "</tr><tr>";
+                                profHTML =profHTML + "<td width='100px'>Last Name</td><td> : <input type='text' id='last_name' name='last_name' value='"+last_name+"'></td>";
+                                profHTML = profHTML + "</tr><tr>";
+                                profHTML = profHTML + "<td width='100px'>Job Category</td><td> :";
+                                profHTML = profHTML + "<select id='jobs_cate' name='jobs_cate'>";
+                                
+                                <?php
+                                                                 
+                                    foreach($data as $row):?>
+                                        profHTML = profHTML + "<option value='<?php echo $row->cat_id;?>'><?php echo $row->cat_name;?></option>";
+                                   <?php endforeach;
+                            
+                                ?>
+                                profHTML = profHTML +"</select></td>";
+                                profHTML = profHTML + "<td colspan='2'><hr width=600px align='left'></td>";
+                                profHTML = profHTML + "</tr><tr>";
+                                profHTML = profHTML + "<td colspan='2'><h2>EXPERIENCES</h2></td>";
+                                profHTML = profHTML + "</tr>";
+                                
+                                
+                                for(var i=0;i<j;i++){
+                                profHTML = profHTML +"<tr>";
+                                profHTML =profHTML + "<td width='100px'>Position</td><td> : <input type='text' id='pos_title["+i+"]' name='pos_title' value='"+pos_title[i]+"'>";
+                               
+                                profHTML = profHTML +"</td>";
+                                profHTML = profHTML + "</tr><tr>";
+                                profHTML =profHTML + "<td width='100px'>Company</td><td> : <input type='text' id='pos_company["+i+"]' name='pos_company' value='"+pos_company[i]+"'></td>";
+                                profHTML = profHTML + "</tr><tr>";
+                                profHTML =profHTML + "<td width='100px'>Date</td><td> : <input type='text' id='pos_date["+i+"]' name='pos_date' value='"+pos_date[i]+"'></td>";
+                                profHTML = profHTML + "</tr><tr>";
+                                profHTML =profHTML + "<td width='100px'>Summary</td><td> :<textarea id='pos_summary["+i+"]' name='pos_summary'>"+pos_summary[i]+"</textarea></td>";
+                                profHTML =profHTML +"</tr><tr><td colspan='2'><hr width=200px align='left' style='margin-left:50px;'></td></tr>";
+                                }
+                                profHTML = profHTML +"<tr>";
+                                 profHTML = profHTML + "<td colspan='2'><hr width=600px align='left'></td>";
+                                profHTML = profHTML + "</tr><tr>";
+                                profHTML = profHTML + "<td colspan='2'><h2>EDUCATION</h2></td>";
+                                profHTML = profHTML + "</tr>";
+                                for(var i=0;i<k;i++){
+                                profHTML = profHTML +"<tr>";
+                                profHTML =profHTML + "<td width='100px'>School</td><td> : <input type='text' id='edu_schoolName["+i+"]' name='edu_schoolName' value='"+edu_schoolName[i]+"'></td>";
+                                profHTML = profHTML + "</tr><tr>";
+                                profHTML =profHTML + "<td width='100px'>Field</td><td> : <input type='text' id='edu_fieldOfStudy["+i+"]' name='edu_fieldOfStudy' value='"+edu_fieldOfStudy[i]+"'></td>";
+                                profHTML = profHTML + "</tr><tr>";
+                                profHTML =profHTML + "<td width='100px'>Date</td><td> : <input type='text' id='edu_date["+i+"]' name='edu_date' value='"+edu_date[i]+"'></td>";
+                                profHTML = profHTML + "</tr><tr>";
+                                profHTML =profHTML + "<td width='100px'>Degree</td><td> : <input type='text' id='edu_degree["+i+"]' name='edu_degree' value='"+edu_degree[i]+"'></td>";
+                                profHTML = profHTML + "</tr><tr>";
+                                profHTML =profHTML + "<td width='100px'>Activities</td><td> : <textarea id='edu_activities["+i+"]' name='edu_activities'>"+edu_activities[i]+"</textarea></td>";
+                                profHTML = profHTML + "</tr><tr>";
+                                profHTML =profHTML + "<td width='100px'>Notes</td><td> : <textarea id='edu_note["+i+"]' name='edu_note'>"+edu_notes[i]+"</textarea></td>";
+                                profHTML = profHTML +"</tr><tr><td colspan='2'><hr width=200px align='left' style='margin-left:50px;'></td></tr>";
+                                }
+                                profHTML = profHTML + "<tr><td width='100px'>Skills</td><td> :<textarea id='skill' name='skill'>"+skill+"</textarea></td></tr>";
+                                profHTML = profHTML + "<tr>";
+                                profHTML = profHTML + "<td colspan='2'><hr width=600px align='left'></td>";
+                                profHTML = profHTML + "</tr><tr>";
+                                profHTML = profHTML + "<td colspan='2'><h2>ADDITIONAL INFORMATION</h2></td>";
+                                profHTML = profHTML + "</tr><tr>";
+                                 profHTML =profHTML + "<td width='100px'>Date Of Birth</td><td> : <input type='text' id='dateOfBirth' name='dateOfBirth' value="+dateOfBirth+"></td>";
+                                 profHTML = profHTML + "</tr><tr>";
+                                profHTML =profHTML + "<td width='100px'>Interest</td><td> : <input type='text' id='interest' name='interest' value='"+interest+"'></td>";
+                                profHTML = profHTML + "</tr><tr>";
+                               
+                                profHTML =profHTML + "</table>";
+                                profHTML = profHTML +"<input type='hidden' id='exp_title' name='exp_title' value='"+pos_title+"'>\n\
+                                <input type='hidden' id='sess' name='sess' value='<?php echo $sess;?>'>";                                                    
+                                profHTML = profHTML +"<input type='hidden' id='exp_com' name='exp_com' value='"+pos_company+"'>";
+                                profHTML = profHTML + "<input type='hidden' id='exp_date' name='exp_date' value='"+pos_date+"'>";
+                                profHTML = profHTML +"<input type='hidden' id='exp_summary' name='exp_summary' value='"+pos_summary+"'>";
+                                profHTML = profHTML +"<input type='hidden' id='edu_school' name='edu_school' value='"+edu_schoolName+"'>";
+                                profHTML = profHTML +"<input type='hidden' id='edu_field' name='edu_field' value='"+edu_fieldOfStudy+"'>";
+                                profHTML = profHTML +"<input type='hidden' id='edu_date' name='edu_date' value='"+edu_date+"'>";
+                                profHTML = profHTML + "<input type='hidden' id='edu_degree' name='edu_degree' value='"+edu_degree+"'>";
+                                profHTML = profHTML +"<input type='hidden' id='edu_act' name='edu_act' value='"+edu_activities+"'>";
+                                profHTML = profHTML +"<input type='hidden' id='edu_note' name='edu_note' value='"+edu_notes+"'>";
+                                profHTML =profHTML + "<td width='100px'><input type='submit' value='SUBMIT' class='btn'></td></tr>";
+                                profHTML = profHTML +"</form></p>";
+                            }
+                            document.getElementById("loginbadge").innerHTML = profHTML;
+//                            document.getElementById('pos_title').value = pos_title;
+//                            document.getElementById('pos_company').value= pos_company;
+//                            document.getElementById('pos_date').value=pos_date;
+//                            document.getElementById('pos_summary').value = pos_summary;
+//                            document.getElementById('edu_schooName').value = 
+                            
+                        }
+                     
+    </script>
+    <script type="text/javascript">
+        function add_exp(){
+            data= "<p>";
+            data = data + "<form method='post' action="+'insertexp'+" id='form_exp'>";
+            data = data + "<table bgcolor='#00FF00'>";
+            data = data + "<tr>";
+            data = data + "<td colspan='2'><hr  width=600px></td>";
+            data = data + "</tr>";
+            data = data + "<tr>";
+            data = data + "<td colspan='2'><h2>EXPERIENCES</h2></td>";
+            data = data + "</tr><tr>";
+            data = data + "<td width='100px'>Position</td><td> :<input type='text' id='exp_pos' name='exp_pos'>\n\
+                            <input type='hidden' name='sess' id='sess' value='<?php echo $sess;?>'></td>";
+            data = data + "</tr><tr>";
+            data = data + "<td width='100px'>Company</td><td> :<input type='text' id='exp_com' name='exp_com'></td>";
+            data = data + "</tr><tr>";
+            data = data + "<td width='100px'>Date</td><td> :<input type='date' id='exp_date' name='exp_date'></td>";
+            data = data + "</tr><tr>";
+            data = data + "<td width='100px'>Summary</td><td> :<textarea id='exp_sum' name='exp_sum'></textarea></td>";
+            data = data + "</tr><tr>";
+            data = data + "<td width='100px' colspan='2'><input type='submit' value='Save' class='btn' style='margin-right:10px;'><button onclick=''>Cancel</button></td>";
+//            data = data + "</tr><tr>";
+//            data = data + "<td colspan='2'><button onclick='add_exp();' class='btn btn-link'>Add More Experiences</button></td>";
+            data = data + "</tr>";    
+            data = data + "</table>";
+            data = data + "</form>";
+            data = data + "</p>";
+            document.getElementById('exp').innerHTML = data;
+        }
+        function add_edu(){
+            data= "<p>";
+            data = data + "<form method='post' action="+'insertedu'+">";
+            data = data + "<table>";
+            data = data + "<tr>";
+            data = data + "<td colspan='2'><hr  width=600px></td>";
+            data = data + "</tr>";
+            data = data + "<tr>";
+            data = data + "<td colspan='2'><h2>EDUCATION</h2></td>";
+            data = data + "</tr><tr>";
+            data = data + "<td width='100px'>School Name</td><td> :<input type='text' id='edu_schoolName' name='edu_schoolName'>\n\
+                        <input type='hidden' name='sess' id='sess' value='<?php echo $sess;?>'></td>";
+            data = data + "</tr><tr>";
+            data = data + "<td width='100px'>Field Of Study</td><td> :<input type='text' id='edu_fieldOfStudy' name='edu_fieldOfStudy'></td>";
+            data = data + "</tr><tr>";
+            data = data + "<td width='100px'>Date</td><td> :<input type='date' id='edu_date' name='edu_date'></td>";
+            data = data + "</tr><tr>";
+            data = data + "<td width='100px'>Degree</td><td> :<input type='text' id='edu_degree' name='edu_degree'></td>";
+            data = data + "</tr><tr>";
+            data = data + "<td width='100px'>Activities</td><td> :<textarea id='edu_act' name='edu_act'></textarea></td>";
+            data = data + "</tr><tr>";
+            data = data + "<td width='100px'>Notes</td><td> :<textarea id='edu_note' name='edu_note'></textarea></td>";
+            data = data + "</tr><tr>";
+            data = data + "<td width='100px' colspan='2'><input type='submit' value='Save' class='btn' style='margin-right:10px;'><button class='btn' onclick='display_exp()'>Cancel</button></td>";
+//            data = data + "</tr><tr>";
+//            data = data + "<td colspan='2'><button onclick='add_edu();' class='btn btn-link'>Add More Education</button></td>";
+            data = data + "</tr>"
+            data = data + "</table>";
+            data = data + "</form>";
+            data = data + "</p>";
+            document.getElementById('addedu').innerHTML = data;
+        }
+        function display_none(){
+            form_id = document.getElementById('form_exp');
+            form_id.parentNode.removeChild(form_id);
+            document.getElementById('addexp').style.display = 'block';
+        }
+//        function display_exp(){
+//            data = "<p>";
+//            data = data + "<table>";
+//            <?php
+//            foreach($datass as $kk):?>////
+//                
+//             data = data + "<tr>";
+//             data = data + "<td width='100px'>Position</td><td> :"+<?php // echo $kk['exp_position'];?>+"<input type='hidden' name='sess' value='"+<?php // echo $sess;?>+"'></td>";
+//             data = data + "</tr><tr>";
+//             data = data + "<td width='100px'>Company</td><td> :"+<?php // echo $kk['exp_company'];?>+"</td>";
+//             data = data + "</tr><tr>";
+//             data = data + "<td width='100px'>Date</td><td> :"+<?php // echo $kk['exp_date'];?>+"</td>";
+//             data = data + "</tr><tr>";
+//             data = data + "<td width='100px'>Summary</td><td> :<textarea>"+<?php // echo $kk['exp_sum'];?>+"</td>";
+//             data = data + "</tr>";
+//             <?php
+//            endforeach;
+            ?>//
+//             data = data +"</table></p>";
+//           document.getElementById('addexp').innerHTML=data;
+//          
+//        }
+//        window.onload = function () {
+//    (function () {
+//        var a = document.getElementById('addexp');
+//        if (a) {
+//           display_exp();
+//        }
+//        else {
+//            setTimeout(arguments.callee, 50); // call myself again in 50 msecs
+//        }
+//        var b = document.getElementById('addedu');
+//        if (b) {
+//           add_edu();
+//        }
+//        else {
+//            setTimeout(arguments.callee, 50); // call myself again in 50 msecs
+//        }
+//    }());
+//};
+        </script>
+        <script type="text/javascript">
+           function show_edit(exp_id){
+               data_exp_pos = document.getElementById('data_exp_pos').value;
+               data_exp_com = document.getElementById('data_exp_com').value;
+               data_exp_date = document.getElementById('data_exp_date').value;
+               data_exp_sum = document.getElementById('data_exp_sum').value;
+               
+               data= "<p>";
+            data = data + "<form method='post' action="+'updateexp/'+exp_id+">";
+            data = data + "<table bgcolor='#00FF00'>";
+            data = data + "<tr>";
+            data = data + "<td width='100px'>Position</td><td> :<input type='text' id='exp_pos' name='exp_pos' value='"+data_exp_pos+"'>\n\
+                            <input type='hidden' name='sess' id='sess' value='<?php echo $sess;?>'></td>";
+            data = data + "</tr><tr>";
+            data = data + "<td width='100px'>Company</td><td> :<input type='text' id='exp_com' name='exp_com' value='"+data_exp_com+"'></td>";
+            data = data + "</tr><tr>";
+            data = data + "<td width='100px'>Date</td><td> :<input type='date' id='exp_date' name='exp_date' value='"+data_exp_date+"'></td>";
+            data = data + "</tr><tr>";
+            data = data + "<td width='100px'>Summary</td><td> :<textarea id='exp_sum' name='exp_sum'>"+data_exp_sum+"</textarea></td>";
+            data = data + "</tr><tr>";
+            data = data + "<td width='100px' colspan='2'><input type='submit' value='Save' class='btn' style='margin-right:10px;'></td>";
+//            data = data + "</tr><tr>";
+//            data = data + "<td colspan='2'><button onclick='add_exp();' class='btn btn-link'>Add More Experiences</button></td>";
+            data = data + "</tr>";    
+            data = data + "</table>";
+            data = data + "</form>";
+            data = data + "</p>";
+            document.getElementById('exp').innerHTML = data;
+           }
+       </script>
+</head>
+<body>
+    <!-- need to be logged in to use; if not, offer a login button -->
+
+    <div id="loginbadge" style="margin-left: 50px;">
+            <form method="post" action="insertsub" enctype='multipart/form-data'>
+               
+                 <table>
+                <tr>
+                    <td colspan="2"><img src="http://static02.linkedin.com/scds/common/u/img/icon/icon_no_photo_80x80.png">
+                    <input type="hidden" id="sess" name="sess" value="<?php echo $sess;?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100px">Upload Profile</td> <td>: <input type="file" id="pic_url" name="pic_url"></td>
+                </tr>
+                <input type="hidden" id="id" name="id"><br>
+                <tr>
+                    <td width="100px">First Name</td> <td>: <input type="text" id="first_name" name="first_name"></td>
+                </tr>
+                <tr>
+                    <td width="100px">Last Name</td> <td>: <input type="text" id="last_name" name="last_name"></td>
+                </tr>
+                <tr>
+                    <td>Job Category</td>
+                    <td>: 
+                       
+                        <select id="jobs_cate" name="jobs_cate">
+                             <?php
+                             
+                             foreach ($result as $r):?>
+                                <option value="<?php echo $r->cat_id; ?>"><?php echo $r->cat_name; ?></option>
+                             <?php    
+                             endforeach;
+                             ?>
+                        </select>
+                    </td>
+                </tr>
+        </table>
+                
+        <div id="addexp">
+               <hr width="600px">
+                <h2>EXPERIENCES</h2>
+                <?php 
+                foreach ($datas as $k):
+//                    var_dump($k);
+                ?>
+                
+                <div id="exp">
+                <table><a href="#"><img src="./images/edit1.png" onclick="show_edit('<?php echo $k['exp_id'];?>')" align="right" style="padding-right: 300px;"></a>
+                <tr>
+                    <td width="100px">Position</td> <td>: <?php echo $k['exp_position'];?>
+                    <input type="hidden" id="data_exp_pos" value="<?php echo $k['exp_position'];?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100px">Company</td> <td>: <?php echo $k['exp_company'];?>
+                        <input type="hidden" id="data_exp_com" value="<?php echo $k['exp_company'];?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100px">Date</td> <td>: <?php echo $k['exp_date'];?>
+                        <input type="hidden" id="data_exp_date" value="<?php echo $k['exp_date'];?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100px">Summary</td> <td>: <?php echo $k['exp_summary'];?>
+                        <input type="hidden" id="data_exp_sum" value="<?php echo $k['exp_summary'];?>">
+                    </td>
+                </tr>
+                </table>
+                 <hr width="300px" style="margin-left: 80px;">
+                </div>
+                
+                  <?php endforeach;?>
+                
+            <button onclick="add_exp();" class="btn btn-link">Add Experiences</button>
+        </div>
+                
+        <div id="addedu">
+               <hr width="600px">
+               <h2>EDUCATION</h2>
+               
+                    <?php foreach($result_edu as $re):?>
+                    <table><img src="./images/edit1.png" onclick="edit()" align="right" style="padding-right: 300px;">
+                        <tr>
+                            
+                            <td width="100px">School Name</td> <td>: <?php echo $re['edu_schoolName'];?></td>
+                        </tr>
+                        <tr>
+                            <td width="100px">Field Of Study</td> <td>: <?php echo $re['edu_field'];?></td>
+                        </tr>
+                        <tr>
+                            <td width="100px">Date</td> <td>: <?php echo $re['edu_date'];?></td>
+                        </tr>
+                        <tr>
+                            <td width="100px">Degree</td> <td>: <?php echo $re['edu_degree'];?></td>
+                        </tr>
+                        <tr>
+                            <td width="100px">Activities</td> <td>: <?php echo $re['edu_activities'];?></td>
+                        </tr>
+                        <tr>
+                            <td width="100px">Notes</td> <td>: <?php echo $re['edu_notes'];?></td>
+                        </tr>
+                     </table>
+               <hr width="300px" style="margin-left: 80px;">
+                <?php endforeach; ?>
+               
+            <button onclick="add_edu();" class="btn btn-link">Add Education</button>
+        </div>
+                
+        <table>
+                <tr>
+                    <td colspan="2"><hr width="600px"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><h2>ADDITIONAL INFORMATION</h2></td>
+                </tr>
+                <tr>
+                    <td width="100px">Interest</td> <td>: <textarea width="400px" height="200px" id="interest" name="interest"></textarea></td>
+                </tr>
+                <tr>
+                    <td width="100px">Date Of Birth</td> <td>: <input type="date" id="dateOfBirth" name="dateOfBirth"></td>
+                </tr>
+                <tr>
+                    <td width="100px"><input type="submit" value="SUBMIT" class='btn'></td>
+                </tr>
+        </table>
+            </form>
+    </div>
+
+    <div style ="margin-left: 50px; margin-top: 30px;"><script type="IN/Login"></script></div>
+   

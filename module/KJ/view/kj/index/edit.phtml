@@ -1,0 +1,14 @@
+<form method="post" action="<?php echo $this->url('home/action', array('action' => 'update')) ?>">   
+    <fieldset>
+        <input type="hidden" name="job_id" value="<?php echo $job->getJobId(); ?>" />
+        <input type="text" name ="job_title" value="<?php echo $job->getJobTitle()?> "> <br />
+	<input type="text" name="job_deadline"class="datepicker" value=" <?php echo $job->getJobDeadline() ?> "><br />	
+        <input type="text" name ="job_location" value="<?php echo $job->getJobLocation(); ?>"> <br />
+        <input type="text" name ="job_salary" value="<?php echo $job->getJobSalary(); ?>"> <br />
+        <input type="text" name ="job_benefit" value="<?php echo $job->getJobBenefit(); ?>"> <br />
+        <input type="text" name ="about_company" value="<?php echo $job->getAboutCompany(); ?>"> <br /> 
+	<textarea rows="3" name="job_description"> <?php echo $job->getJobDescription(); ?></textarea> <br />
+        <textarea rows="3" name="job_apply"><?php echo $job->getJobApply(); ?></textarea> <br />
+        <button type="submit" class="btn"><?php echo $submitText ?></button>
+    </fieldset>
+</form>

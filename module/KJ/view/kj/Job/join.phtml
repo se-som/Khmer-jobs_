@@ -1,0 +1,13 @@
+<table>
+<?php 
+
+     echo '<tr>';
+	echo'<td>'. $jobs->getJobTitle().'</td>'; 
+	echo'<td>'.($jobs->getJcat()->getCom()->getComName()).'</td>'; 
+	echo'<td>'.($jobs->getJcat()->getCat()->getCatName()).'</td>';
+        echo'<td>'. $jobs->getJobDeadline().'</td>';        
+        echo '</tr>';
+		echo 'dddd';
+
+?>
+</table>

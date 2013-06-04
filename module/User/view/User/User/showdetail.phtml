@@ -1,0 +1,41 @@
+<div style="margin-left: 50px;">
+<?php foreach($userdatas as $userdata):?>
+<img src="<?php echo $userdata->pic_url;?>" style="height: 100px; width:100px">
+<?php echo $userdata->first_name." ".$userdata->last_name;?>
+<hr width="600px">
+<h2>EXPERIENCES</h2>
+<?php 
+
+$pos = explode(',', $userdata->pos_title);
+$pos_com = explode(',', $userdata->pos_company);
+$pos_dat = explode(',', $userdata->pos_date);
+$pos_sum = explode(',', $userdata->pos_summary);
+$edu_school = explode(',', $userdata->edu_schoolName);
+$edu_field = explode(',', $userdata->edu_fieldOfStudy);
+$edu_dat = explode(',', $userdata->edu_date);
+$edu_de = explode(',', $userdata->edu_degree);
+$edu_ac = explode(',', $userdata->edu_activities);
+$edu_note = explode(',', $userdata->edu_note);
+?>
+<?php for($i=0;$i<count($pos);$i++){?>
+<b><?php echo $pos[$i];?></b><br>
+    COMPANY : <?php echo $pos_com[$i];?><br>
+    DATE : <?php echo $pos_dat[$i];?><br>
+    SUMMARY :<div style='width:550px; padding-left:40px;'><?php echo $pos_sum[$i];?></div><br>
+ <?php }?>
+<hr width="600px">
+<h2>EDUCATION</h2>
+<?php for($i=0;$i<count($edu_school);$i++){?>
+    <b><?php echo $edu_school[$i];?></b><br>
+    FIELD : <?php echo $edu_field[$i];?><br>
+    DATE : <?php echo $edu_dat[$i];?><br>
+    DEGREE : <?php echo $edu_de[$i];?><br>
+    ACTIVITY :<div style='width:550px; padding-left:40px;'><?php echo $edu_ac[$i];?></div>
+    NOTE :<div style='width:550px; padding-left:40px;'><?php echo $edu_note[$i];?></div><br>
+<?php }?>
+<hr width="600px">
+<h2>ADDITIONAL INFORMATION</h2>
+INTEREST : <?php echo $userdata->interest;?><br>
+DATE OF BIRTH : <?php echo $userdata->dateOfBirth;?><br>
+<?php endforeach; ?>
+</div>

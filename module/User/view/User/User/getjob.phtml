@@ -1,0 +1,13 @@
+hello
+<table border ="1">
+
+<?php
+ foreach ($result as $row):?>
+            <tr>
+           <td><?php echo $row->jobs_id;?></td>
+           <td><?php echo $row->jobs_title;?></td>
+            </tr>
+           <?php
+       endforeach;
+?>
+</table>

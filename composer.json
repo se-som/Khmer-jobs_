@@ -1,0 +1,16 @@
+{
+    "name": "zendframework/skeleton-application",
+    "description": "ZF2 example by SPEEDER",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "SPEEDER",
+        "zf2"
+    ],
+    "homepage": "http://liratanak.github.io",
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "2.*",
+		"doctrine/doctrine-orm-module": "0.7.0",
+		"dino/dompdf-module": "dev-master"
+    }
+}

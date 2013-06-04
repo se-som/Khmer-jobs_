@@ -1,0 +1,43 @@
+
+
+<?php if($jjs != null){ ?>
+<table border="1">
+    <tr>
+        <th>job title</th>
+        <th> user apply </th>
+    </tr>
+<?php 
+    foreach ($jjs as $jobs){
+        $jcat = $jobs['jcat_id'];
+        echo '<tr>';  
+          echo '<td>'.$jobs['title'].'</td>';        
+          echo '<td>';
+            foreach ($jobs['us'] as $n){ 
+               $jca = $n->jcat_id;
+               if($jca == $jcat){
+                    echo $n->username.' : [<img src ="./images/pdf.png">]'.'<br />';
+               }
+            }  
+            echo '</td>';
+       echo '</tr>';
+    }
+?>
+</table>
+<?php 
+ }  else {
+    echo 'it have no user apply';  
+ }
+?>
+
+
+
+
+
+
+
+
+
+
+
+ 
+

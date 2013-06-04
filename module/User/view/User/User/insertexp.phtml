@@ -1,0 +1,7 @@
+<?php
+session_start();
+echo $_SESSION['sess'];
+?>
+<form method="post" action="">
+    <input type="text" name="sess" id="sess" value="<?php echo $_SESSION['sess'];?>">
+</form>
