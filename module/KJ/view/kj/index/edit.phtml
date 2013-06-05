@@ -1,14 +1,73 @@
-<form method="post" action="<?php echo $this->url('home/action', array('action' => 'update')) ?>">   
+<form class="form-horizontal" method="post" method="post" action="<?php echo $this->url('home/action', array('action' => 'update')) ?>">   
     <fieldset>
-        <input type="hidden" name="job_id" value="<?php echo $job->getJobId(); ?>" />
-        <input type="text" name ="job_title" value="<?php echo $job->getJobTitle()?> "> <br />
-	<input type="text" name="job_deadline"class="datepicker" value=" <?php echo $job->getJobDeadline() ?> "><br />	
-        <input type="text" name ="job_location" value="<?php echo $job->getJobLocation(); ?>"> <br />
-        <input type="text" name ="job_salary" value="<?php echo $job->getJobSalary(); ?>"> <br />
-        <input type="text" name ="job_benefit" value="<?php echo $job->getJobBenefit(); ?>"> <br />
-        <input type="text" name ="about_company" value="<?php echo $job->getAboutCompany(); ?>"> <br /> 
-	<textarea rows="3" name="job_description"> <?php echo $job->getJobDescription(); ?></textarea> <br />
-        <textarea rows="3" name="job_apply"><?php echo $job->getJobApply(); ?></textarea> <br />
-        <button type="submit" class="btn"><?php echo $submitText ?></button>
+        <div class="control-group">
+            <label class="control-label" for="#"></label>
+            <div class="controls">
+                <input type="hidden" name="job_id" value="<?php echo $job->getJobId(); ?>" />
+            </div>
+        </div>
+           
+       <div class="control-group">
+            <label class="control-label" for="#">Title</label>
+            <div class="controls">
+                <input type="text" name ="job_title" value="<?php echo $job->getJobTitle()?> ">
+            </div>
+       </div>
+            
+       <div class="control-group">
+            <label class="control-label" for="#">Close date</label>
+            <div class="controls">
+                <input type="text" name="job_deadline"class="datepicker" value=" <?php echo $job->getJobDeadline() ?> ">
+            </div>
+       </div>
+            
+         <div class="control-group">
+            <label class="control-label" for="inputEmail">Address </label>
+            <div class="controls">
+                <input type="text" name ="job_location" value="<?php echo $job->getJobLocation(); ?>">
+          </div>
+        </div>
+            
+         <div class="control-group">
+            <label class="control-label" for="inputEmail">Salary</label>
+            <div class="controls">
+                <input type="text" name ="job_salary" value="<?php echo $job->getJobSalary(); ?>">
+          </div>
+          </div>
+            
+         <div class="control-group">
+            <label class="control-label" for="inputEmail">Benefit </label>
+            <div class="controls">
+                <input type="text" name ="job_benefit" value="<?php echo $job->getJobBenefit(); ?>">
+            </div>
+        </div>
+            
+         <div class="control-group">
+            <label class="control-label" for="#">About company</label>
+            <div class="controls">
+                <input type="text" name ="about_company" value="<?php echo $job->getAboutCompany(); ?>">
+          </div>
+         </div>
+            
+         <div class="control-group">
+            <label class="control-label" for="#">Description</label>
+            <div class="controls">
+                <textarea rows="3" name="job_description"> <?php echo $job->getJobDescription(); ?></textarea>
+          </div>
+        </div>
+            
+        <div class="control-group">
+            <label class="control-label" for="inputEmail">How apply </label>
+            <div class="controls">
+                <textarea rows="3" name="job_apply"><?php echo $job->getJobApply(); ?></textarea>
+          </div>
+        </div>
+            
+         <div class="control-group">
+            <label class="control-label" for="inputEmail"></label>
+            <div class="controls">
+                <button type="submit" class="btn"><?php echo $submitText ?></button>
+          </div>
+        </div>
     </fieldset>
 </form>

@@ -1,37 +1,31 @@
-<table>
+
 <?php 
-echo $jobs->getJcat()->getCom()->getComName().'<br />';
-echo $jobs->getJobTitle().'<br />';
-echo $jobs->getJobDeadline().'<br />';
-echo $jobs->getJobLocation().'<br />';
-echo $jobs->getJobSalary(). '<br />';
-
-
+echo 'Company name :'. $jobs->getJcat()->getCom()->getComName().'<br />';
+echo 'Title :' . $jobs->getJobTitle().'<br />';
+echo 'Close date :'.$jobs->getJobDeadline().'<br />';
+echo 'Location :'. $jobs->getJobLocation().'<br />';
+echo 'Salary :'. $jobs->getJobSalary(). '<br />';
+echo '<h2>About company:</h2> <br />';
 echo $jobs->getAboutCompany(). '<br />';
+echo '<h2>Benefit :</h2> <br />';
 echo $jobs->getJobBenefit(). '<br />';
+echo '<h2>Description :</h2> <br />';
 echo $jobs->getJobDescription(). '<br />';
 
-var_dump($jobs);
+echo '<h2>How apply :</h2> <br />';
+echo '<address>';
+echo $jobs->getJobApply(). '<br />';
+echo '</address>';
+echo '<h2>Contact Information</h2>';
 
-     echo '<tr>';
-	echo'<td>'. $jobs->getJobTitle().'</td>'; 
-	echo'<td>'.($jobs->getJcat()->getCom()->getComName()).'</td>'; 
-	echo'<td>'.($jobs->getJcat()->getCat()->getCatName()).'</td>';
-        echo'<td>'. $jobs->getJobDeadline().'</td>';        
-        echo '</tr>';
-
+echo '<address>';
+echo '<strong>Address :'. $jobs->getJcat()->getCom()->getComLocation(). '</strong><br />';
+ echo '<abbr> Tel :'. $jobs->getJcat()->getCom()->getComPhone().'</abbr><br />';
+ echo '<abbr> Email : '. $jobs->getJcat()->getCom()->getComEmail().'</abbr><br />';
+ echo '<abbr> Email : '.'<a href="http://'.$jobs->getJcat()->getCom()->getComWeb().' ">'.$jobs->getJcat()->getCom()->getComWeb() .'  </a>' .'</abbr><br />';
+ echo  '</address> ';
 ?>
-</table>
- 
-
-<h1>Contact Information</h1>
-    <address>
-    <strong>Address : <?php echo $jobs->getJcat()->getCom()->getComLocation() ?></strong><br>
+    
    
-    <abbr title="Phone">P:</abbr> (123) 456-7890
-    </address>
-     
-    <address>
-    <strong>Full Name</strong><br>
-    <a href="mailto:#">first.last@example.com</a>
-    </address>
+
+    

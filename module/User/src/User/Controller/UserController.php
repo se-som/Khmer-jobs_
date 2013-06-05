@@ -15,17 +15,25 @@ class UserController extends AbstractActionController {
 //         $this->headScript()->appendFile('http://platform.linkedin.com/in.js');
 //        $result = $this->select_cat();
          $sess = isset($_GET['sess'])?$_GET['sess']:"";
-        $cv = $this->getUserdataTable()->get_js_id($sess);
-        $cv_id = 0;
-        foreach ($cv as $row):
-            $cv_id = $row['id'];
+        $user = $this->getUserdataTable()->get_js_id($sess);
+        $user_id = 0;
+        $cat_id =0;
+        foreach ($user as $row):
+            $user_id = $row['id'];
          endforeach;
         $data = $this->getUserdataTable()->select_cat();
-       $result = $this->getUserdataTable()->select_cat();
-        $resultq = $this->getUserdataTable()->display_exp($cv_id);
-        $result1 = $this->getUserdataTable()->display_exp($cv_id);
-        $result_edu = $this->getUserdataTable()->display_edu($cv_id);
-         return new ViewModel(array('data'=>$data,'result'=>$result,'datas'=>$resultq,'datass'=>$result1,'result_edu'=>$result_edu));
+        $result = $this->getUserdataTable()->select_cat();
+        $resultq = $this->getUserdataTable()->display_exp($user_id);
+        $result1 = $this->getUserdataTable()->display_exp($user_id);
+        $result_edu = $this->getUserdataTable()->display_edu($user_id);
+        $result_cv = $this->getUserdataTable()->select_cv($user_id);
+        $result_cv_ = $this->getUserdataTable()->select_cv($user_id);
+        
+        foreach($result_cv_ as $cv):
+        $cat_id = $cv['jobs_cate'];
+        endforeach;
+        $cat_name = $this->getUserdataTable()->select_cat_name($cat_id);
+         return new ViewModel(array('data'=>$data,'result'=>$result,'datas'=>$resultq,'datass'=>$result1,'result_edu'=>$result_edu,'cv'=>$result_cv,'cat_name'=>$cat_name));
     }
     public function showdbAction(){
         return new ViewModel(array(
@@ -40,6 +48,7 @@ class UserController extends AbstractActionController {
                 }else{
                     $pic_url = $pic;
                 }
+                $sess = isset($_POST['sess'])?$_POST['sess']:"";
                $pos_title =$_POST['exp_title'];
                $pos_company = $_POST['exp_com'];
                $pos_date=$_POST['exp_date'];
@@ -70,13 +79,14 @@ class UserController extends AbstractActionController {
                $last_name =$_POST['last_name'];
                $interest = $_POST['interest'];
                $jobs_cat = $_POST['jobs_cate'];
+               $dob = $_POST['dateOfBirth'];
                $data=array(
                    'pic_url' => $pic_url,
                    'id'   => $js,
                    'first_name'=>$first_name,
                    'last_name'=>$last_name,
                    'interest' => $interest,
-//                   'dateOfBirth' => $dateOfBirth,
+                   'dateOfBirth' => $dob,
                    'jobs_cate' => $jobs_cat,
                    
                );
@@ -116,7 +126,7 @@ class UserController extends AbstractActionController {
                    $this->getUserdataTable()->addskill($data);
                }
               
-               return $this->redirect()->toUrl('userdata');
+               return $this->redirect()->toUrl('/userdata?sess='.$sess);
                
     }
     
@@ -140,13 +150,6 @@ class UserController extends AbstractActionController {
         }
         return $this->providerTable;
     }
-//    public function getUserId($provider_id){
-//        $providerId = new Provider();
-//        $providerId->exchangeArray($provider_id);
-//        return $this->getProviderTable()->getUserId($providerId);
-//        
-//    }
-
     public function inforformAction(){
         return new ViewModel();
     }
@@ -159,7 +162,7 @@ class UserController extends AbstractActionController {
         return new ViewModel(array('result'=>$this->get_job()->select_job()));
     }
     public function insertsubAction(){
-             $uploadpath = './public/';      // directory to store the uploaded files
+             $uploadpath = './public/imgprofile/';      // directory to store the uploaded files
              $max_size = 200000;          // maximum file size, in KiloBytes
              $alwidth = 90000;            // maximum allowed width, in pixels
              $alheight = 80000;           // maximum allowed height, in pixels
@@ -190,16 +193,18 @@ class UserController extends AbstractActionController {
                }
                else echo $err;
              }
-             if(isset($_POST['pic_url'])){
-                 $pic = $_POST['pic_url'];
+             if(isset($_FILES['pic_url'])){
+                 $pic = $pic="http://khmer.jobs/imgprofile/".$_FILES['pic_url']['name'];
              }else{
-                             $pic="http://khmer.jobs/".$_FILES['pic_url']['name'];
+                 $pic = "";            
              }
-             
+//             var_dump($_FILES['pic_url']);
+              $sess = isset($_POST['sess'])?$_POST['sess']:"";
              $first_name = $_POST['first_name'];
              $last_name = $_POST['last_name'];
              $job_cat = $_POST['jobs_cate'];
              $interest = $_POST['interest'];
+            $dob = $_POST['dateOfBirth'];
              $js = 0;
              $js_id = $this->getUserdataTable()->get_js_id($_POST['sess']);
               foreach($js_id as $row):
@@ -211,15 +216,11 @@ class UserController extends AbstractActionController {
                  'last_name' => $last_name,
                  'interest' => $interest,
                  'jobs_cate' => $job_cat,
+                 'dateOfBirth' => $dob,
                  'user_id'    =>$js
              );
-             var_dump($data);
-//             $datas = new Userdata();
-//             $datas->exchangeArray($data);
              $this->getUserdataTable()->insert_sub($data);
-             return $this->redirect()->toUrl('userdata');
-//             return new ViewModel();
-             
+             return $this->redirect()->toUrl('/userdata?sess='.$sess);
     }
     public function insertexpAction(){
         
@@ -264,8 +265,18 @@ class UserController extends AbstractActionController {
         $this->getUserdataTable()->updatetoexp($data);
        return $this->redirect()->toUrl('/userdata?sess='.$sess);
     }
+    
+    public function deleteexpAction(){
+        $sess = isset($_GET['sess'])?$_GET['sess']:"";
+//        var_dump($sess);
+        $exp_id = $this->getEvent()->getRouteMatch()->getParam('slug');
+        $this->getUserdataTable()->delete_exp($exp_id);
+        return $this->redirect()->toUrl('/userdata?sess='.$sess);
+    }
     public function inserteduAction(){
+        
         $sess = isset($_POST['sess'])?$_POST['sess']:"";
+        
         $edu_schoolName = isset($_POST['edu_schoolName'])?$_POST['edu_schoolName']:"";
         $edu_field = isset($_POST['edu_fieldOfStudy'])?$_POST['edu_fieldOfStudy']:"";
         $edu_date = isset($_POST['edu_date'])?$_POST['edu_date']:"";
@@ -288,6 +299,35 @@ class UserController extends AbstractActionController {
          );
          $this->getUserdataTable()->addtoedu($data);
          return $this->redirect()->toUrl('userdata?sess='.$sess);
+    }
+    public function updateeduAction(){
+        $sess = isset($_POST['sess'])?$_POST['sess']:"";
+        $edu_schoolName = isset($_POST['edu_schoolName'])?$_POST['edu_schoolName']:"";
+        $edu_field = isset($_POST['edu_fieldOfStudy'])?$_POST['edu_fieldOfStudy']:"";
+        $edu_date = isset($_POST['edu_date'])?$_POST['edu_date']:"";
+        $edu_degree = isset($_POST['edu_degree'])?$_POST['edu_degree']:"";
+        $edu_act = isset($_POST['edu_act'])?$_POST['edu_act']:"";
+        $edu_note = isset($_POST['edu_note'])?$_POST['edu_note']:"";
+        
+        $edu_id = $this->getEvent()->getRouteMatch()->getParam('edu_id');
+         $data = array(
+             'edu_schoolName' => $edu_schoolName,
+             'edu_field' => $edu_field,
+             'edu_date' => $edu_date,
+             'edu_degree' => $edu_degree,
+             'edu_activities' => $edu_act,
+             'edu_notes' => $edu_note,
+             'edu_id' => $edu_id
+         );
+         
+         $this->getUserdataTable()->updatetoedu($data);
+         return $this->redirect()->toUrl('/userdata?sess='.$sess);
+    }
+    public function deleteeduAction(){
+        $sess = isset($_GET['sess']) ? $_GET['sess']:"";
+        $edu_id = $this->getEvent()->getRouteMatch()->getParam('edu_id');
+        $this->getUserdataTable()->delete_edu($edu_id);
+        return $this->redirect()->toUrl('/userdata?sess='.$sess);
     }
     
 }

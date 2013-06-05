@@ -28,9 +28,12 @@ class JobController extends AbstractActionController {
         
        public function pdfAction()
         {
-        $user_id = (int) $this->params()->fromRoute('id', 1);      
-        $d = $this->getCategoryTable()->pdf($user_id);
-        $cv = $this->getCategoryTable()->cv($user_id);
+        $user_id = (int) $this->params()->fromRoute('id', 1); 
+      //  echo $_POST['jcat_id'];
+        
+        
+        $d = $this->getCategoryTable()->pdf($user_id,  $_POST['jcat_id']);
+ //       $cv = $this->getCategoryTable()->cv($user_id);
         
 //        $pdf = new PdfModel();
 //        $pdf->setOption('filename', 'monthly-report'); // Triggers PDF download, automatically appends ".pdf"
@@ -43,7 +46,7 @@ class JobController extends AbstractActionController {
 //        return $pdf; 
         return new ViewModel (array(
                 'pdf1' => $d,
-                'cv' => $cv
+ //               'cv' => $cv
             ));   
         
         }

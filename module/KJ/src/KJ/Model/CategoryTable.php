@@ -94,130 +94,22 @@ class CategoryTable {
   public function cv($user_id){   
       $cv = $this->tableGateway->getAdapter()->query("select * from jobs_users as a 
           join a_cv as b on a.id = b.user_id
+          
           where a.id = ' ".$user_id." '  "
               ,\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
       return $cv;
   }
   
-  public function pdf($user_id){   
+  public function pdf($user_id,  $jcat){  
+   
       $pdf = $this->tableGateway->getAdapter()->query("select * from jobs_users as a 
-          join a_cover as b on a.id = b.user_id
-          where a.id = ' ".$user_id." '  "
+          join a_jobs_jseeker as b on a.id = b.user_id
+          join a_js_data as c on c.jcat_id = b.jcat_id
+
+          where c.jcat_id = ' ".$jcat. " ' AND a.id = ' ".$user_id." ' "
               ,\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
       return $pdf;
   }
 
   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  public function qfindAll()
-  {
-	  return $this->tableGateway->getAdapter()->query('select * from b_job as b join a_jobs_jseeker as a on b.job_id = a.jobs_id
-						
-                                                        join a_company as c on a.com_id = c.com_id
-                                                        where c.com_id = 211',  
-							\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
-  }
-
-  public function xxfindAll()
-  {
-	  return $this->tableGateway->getAdapter()->query('select * from b_job as b join a_jobs_jseeker as a on b.job_id = a.jobs_id
-							join jobs_users as d on a.user_id = d.id
-                                                        join a_company as c on a.com_id = c.com_id',  
-							\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
-  }
-
-
-
-  public function aaafindAll(){
-    return $this->tableGateway->getAdapter()->query('select * from b_category as c join b_jobcategory as jc on c.cat_id = jc.cat_id
-join a_company as com on com.com_id = jc.com_id
-join b_job as j on j.jcat_id = jc.jcat_id', \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
-  }
-  public function dfindAll()
-  {
-	  return $this->tableGateway->getAdapter()->query('select * from b_job as b join b_jobcategory as a on a.jcat_id = b.jcat_id
-							join a_company as c on a.com_id = c.com_id',
-			  \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
-  }
 }

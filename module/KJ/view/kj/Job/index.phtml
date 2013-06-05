@@ -1,5 +1,4 @@
 
-
 <?php if($jjs != null){ ?>
 <table border="1">
     <tr>
@@ -14,11 +13,16 @@
           echo '<td>'.$jobs['title'].'</td>';        
           echo '<td>';
             foreach ($jobs['us'] as $n){ 
-                
                $jca = $n->jcat_id;
                
                if($jca == $jcat){
-                    echo  '<span class="label label-success"> '.$n->username.'</span> : <a href=" '. $this->url('jobs/pdf', array('controller'=> 'Job', 'action' => 'pdf', 'id' =>$n->id)) . ' " > [<img src ="./images/pdf.png">]</a> <br /> ';
+//                    echo  '<span class="label label-success"> '.$n->username.'</span> : <a href=" '. $this->url('jobs/pdf', array('controller'=> 'Job', 'action' => 'pdf', 'id' =>$n->id)) . ' " > [<img src ="./images/pdf.png">]</a> <br /> ';
+//                   echo  '<span class="label label-success"> '.$n->username.'</span> :';
+                   echo '<form method="post" action="'.$this->url('jobs/pdf', array('controller'=> 'Job', 'action' => 'pdf', 'id' =>$n->id)).'">';
+                   echo '<input type="hidden" name="jcat_id" value="'.$n->jcat_id.'">';
+                   echo $n->username. ': <input type="image"  src = "./images/pdf.png ">';
+                   echo '</form>';             
+                    
                }
             }  
             echo '</td>';
@@ -31,6 +35,7 @@
     echo 'it have no user apply';  
  }
 ?>
+
    
 
 

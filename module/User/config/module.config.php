@@ -87,11 +87,13 @@ return array(
             'insertexp' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/insertexp',
+                    'route'    => '/insertexp[/][:action][/:id]',
                     'constraints' => array(
-                        'action' => 'insertexp',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
                        
                     ),
+                    
                     'defaults' => array(
                         'controller' => 'User\Controller\User',
                         'action'     => 'insertexp',
@@ -114,6 +116,21 @@ return array(
                     ),
                 ),
             ),
+            'deleteexp' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/deleteexp/[:slug]',
+                    'constraints' => array(
+                        'action' => 'deleteexp',
+                       
+                    ),
+                    'slug' => '[a-zA-Z][a-zA-Z0-9_\/-]*',
+                    'defaults' => array(
+                        'controller' => 'User\Controller\User',
+                        'action'     => 'deleteexp',
+                    ),
+                ),
+            ),
             'insertedu' => array(
                 'type'    => 'segment',
                 'options' => array(
@@ -128,7 +145,34 @@ return array(
                     ),
                 ),
             ),
-            
+            'updateedu' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/updateedu/[:edu_id]',
+                    'constraints' => array(
+                        'action' => 'updateedu',
+                    ),
+                    'edu_id' => '[a-zA-Z][a-zA-Z0-9_\/-]*',
+                    'defaults' => array(
+                        'controller' => 'User\Controller\User',
+                        'action'     => 'updateedu',
+                    ),
+                ),
+            ),
+            'deleteedu' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/deleteedu/[:edu_id]',
+                    'constraints' => array(
+                        'action' => 'deleteedu',
+                    ),
+                    'edu_id' => '[a-zA-Z][a-zA-Z0-9_\/-]*',
+                    'defaults' => array(
+                        'controller' => 'User\Controller\User',
+                        'action'     => 'deleteedu',
+                    ),
+                ),
+            ),
             'showdetail' => array(
                 'type'    => 'segment',
                 'options' => array(
