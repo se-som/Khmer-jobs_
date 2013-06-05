@@ -63,7 +63,7 @@ class CategoryTable {
                                                         join b_jobcategory as c on a.jcat_id = c.jcat_id
                                                         join a_company as d on d.com_id = c.com_id
                                                         
-                                                        where c.jcat_id =a.jcat_id AND d.com_id = ' ".$ii." ' ",          
+                                                        where c.jcat_id =a.jcat_id AND a.apply = 1 AND d.com_id = ' ".$ii." ' ",          
 							\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
             
              foreach ($user as $users){          
@@ -90,6 +90,21 @@ class CategoryTable {
            where a.session_id ='".$sess."'",          
             \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);  
        return $ses;     
+  }
+  public function cv($user_id){   
+      $cv = $this->tableGateway->getAdapter()->query("select * from jobs_users as a 
+          join a_cv as b on a.id = b.user_id
+          where a.id = ' ".$user_id." '  "
+              ,\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+      return $cv;
+  }
+  
+  public function pdf($user_id){   
+      $pdf = $this->tableGateway->getAdapter()->query("select * from jobs_users as a 
+          join a_cover as b on a.id = b.user_id
+          where a.id = ' ".$user_id." '  "
+              ,\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+      return $pdf;
   }
 
   

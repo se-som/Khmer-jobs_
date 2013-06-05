@@ -34,26 +34,40 @@ return array(
 							'defaults' => array(
 							),
 						),
-					),
-					
-					
+					),	
 				),
 			),
-			   'jobs' => array(
-		'type' => 'Literal',
-		'options' => array(
-			'route' => '/jobs',
-			'defaults' => array(
-                             '__NAMESPACE__' => 'KJ\Controller',
-				'controller' => 'Job',
-				'action' => 'index',
+			'jobs' => array(
+                            'type' => 'Literal',
+                            'options' => array(
+                                'route' => '/jobs',
+                                'defaults' => array(
+                                    '__NAMESPACE__' => 'KJ\Controller',
+                                    'controller' => 'Job',
+                                    'action' => 'index',
+                                ),
+                            ),
+                            'may_terminate' => true,
+                            'child_routes' => array(     
+                            //action pdf
+                            'pdf' => array(
+				'type'    => 'segment',
+				'options' => array(
+					'route'    => '/pdf[/:action][/:id]',
+					'constraints' => array(
+                                            'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                            'id'     => '[0-9]+',
+					),
+					'defaults' => array(
+                                            'controller' => 'KJ\Controller\Job',
+                                            'action'     => 'pdf',
+					),
+				),
 			),
-                ),
-			),
-			
-			
-			
-		),
+                    ),                
+		),			
+	),
+		
 	),
 	'service_manager' => array(
 		'factories' => array(

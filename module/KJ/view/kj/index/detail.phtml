@@ -1,5 +1,17 @@
 <table>
 <?php 
+echo $jobs->getJcat()->getCom()->getComName().'<br />';
+echo $jobs->getJobTitle().'<br />';
+echo $jobs->getJobDeadline().'<br />';
+echo $jobs->getJobLocation().'<br />';
+echo $jobs->getJobSalary(). '<br />';
+
+
+echo $jobs->getAboutCompany(). '<br />';
+echo $jobs->getJobBenefit(). '<br />';
+echo $jobs->getJobDescription(). '<br />';
+
+var_dump($jobs);
 
      echo '<tr>';
 	echo'<td>'. $jobs->getJobTitle().'</td>'; 
@@ -10,3 +22,16 @@
 
 ?>
 </table>
+ 
+
+<h1>Contact Information</h1>
+    <address>
+    <strong>Address : <?php echo $jobs->getJcat()->getCom()->getComLocation() ?></strong><br>
+   
+    <abbr title="Phone">P:</abbr> (123) 456-7890
+    </address>
+     
+    <address>
+    <strong>Full Name</strong><br>
+    <a href="mailto:#">first.last@example.com</a>
+    </address>

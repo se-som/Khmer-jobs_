@@ -8,14 +8,17 @@
     </tr>
 <?php 
     foreach ($jjs as $jobs){
+        
         $jcat = $jobs['jcat_id'];
         echo '<tr>';  
           echo '<td>'.$jobs['title'].'</td>';        
           echo '<td>';
             foreach ($jobs['us'] as $n){ 
+                
                $jca = $n->jcat_id;
+               
                if($jca == $jcat){
-                    echo $n->username.' : [<img src ="./images/pdf.png">]'.'<br />';
+                    echo  '<span class="label label-success"> '.$n->username.'</span> : <a href=" '. $this->url('jobs/pdf', array('controller'=> 'Job', 'action' => 'pdf', 'id' =>$n->id)) . ' " > [<img src ="./images/pdf.png">]</a> <br /> ';
                }
             }  
             echo '</td>';
@@ -28,10 +31,7 @@
     echo 'it have no user apply';  
  }
 ?>
-
-
-
-
+   
 
 
 
