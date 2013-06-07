@@ -11,51 +11,55 @@ use KJ\Model\Category;
 
 class IndexController extends AbstractActionController {
     protected $category;
+    protected $session;
+    
     public function indexAction() {
-            $sess = isset($_GET['sess']) ? $_GET['sess'] : "";
+            $sess = isset($_GET['sess']) ? $_GET['sess'] : "";                      
 		$jobs = $this->getEntityManager()->getRepository('\KJ\Entity\BJob')->findAll();
-                $coms = $this->getCategoryTable()->findAll4($sess);               
+                $coms = $this->getCategoryTable()->findAll4($sess);   
                 return new ViewModel(array(
 			'jobs' => $jobs,  
                         'com' => $coms
 		));
 	}
+        
 // about job......
         public function newJobAction(){	
                 $sess = isset($_GET['sess']) ? $_GET['sess'] : "";
+              
+                $request = $this->getRequest(); 
+                if ($request->isPost()) {
+                    $sess= $_POST['session'];
+                    $post = $this->getRequest()->getPost();
+                    $company = $this->getEntityManager()->find('\KJ\Entity\ACompany', $post->com_id);
+                    $category = $this->getEntityManager()->find('\KJ\Entity\BCategory', $post->cat_id);                       
+                    $jcat = new \KJ\Entity\BJobCategory();           
+                    $jcat->setCat($category);
+                    $jcat->setCom($company);
+                    $job = new \KJ\Entity\BJob();
+                    $job->setJobTitle($post->job_title);
+                    $job->setJobLocation($post->job_location);
+                    $job->setJobDeadline($post->job_deadline);      
+                    $job->setJobBenefit($post->job_benefit);
+                    $job->setJobSalary($post->job_salary); 
+                    $job->setAboutCompany($post->about_company);
+                    $job->setJobApply($post->job_apply);            
+                    $job->setJobDescription($post->job_description);      
+                    $job->setJcat($jcat);
+                    $this->getEntityManager()->persist($jcat);           
+                    $this->getEntityManager()->persist($job);   
+                    $this->getEntityManager()->flush();
+                    return $this->redirect()->toUrl('/index?sess='.$sess); 
+                }   
                
 		return new ViewModel(array(
 				'categories' => $this->getEntityManager()->getRepository('\KJ\Entity\BCategory')->findAll(),
                                 'com' => $this->getCategoryTable()->findAll4($sess)
                     ));
 	}
-        public function createJobByFormAction(){
-		$post = $this->getRequest()->getPost();
-                
-		$company = $this->getEntityManager()->find('\KJ\Entity\ACompany', $post->com_id);
-		$category = $this->getEntityManager()->find('\KJ\Entity\BCategory', $post->cat_id); 
-                       
-		$jcat = new \KJ\Entity\BJobCategory();           
-		$jcat->setCat($category);
-                
-		$jcat->setCom($company);
-                
-		$job = new \KJ\Entity\BJob();
-		$job->setJobTitle($post->job_title);
-                $job->setJobLocation($post->job_location);
-                $job->setJobDeadline($post->job_deadline);      
-                $job->setJobBenefit($post->job_benefit);
-                $job->setJobSalary($post->job_salary); 
-                $job->setAboutCompany($post->about_company);
-                $job->setJobApply($post->job_apply);            
-		$job->setJobDescription($post->job_description);      
-		$job->setJcat($jcat);
-		$this->getEntityManager()->persist($jcat);           
-		$this->getEntityManager()->persist($job);   
-		$this->getEntityManager()->flush();       
-                return $this->redirect()->toRoute('home', array('controller' => 'index'));             			
-	}
+        
         public function deleteAction() {
+                $sess= $_POST['session'];
 		$id = $this->params('id');
 		$job = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default')->find('\KJ\Entity\Bjobcategory', $id);         
 		if(null == $job){
@@ -64,8 +68,12 @@ class IndexController extends AbstractActionController {
 		$em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 		$em->remove($job);
 		$em->flush();
-		return $this->redirect()->toRoute('home', array('controller' => 'job', 'action' => 'index'));
-	}
+                return $this->redirect()->toUrl('/index?sess='.$sess);           
+             //   $this->redirect()->toRoute('home', array('controller' => 'job', 'action' => 'index'));
+                    
+                    
+               
+        }
         public function updateAction() {
 		$request = $this->getRequest();
 		if ($request->isPost()) {
@@ -76,7 +84,7 @@ class IndexController extends AbstractActionController {
 				$this->redirect()->toRoute('home/action', array('action' => 'index'));
 			}
 			if (isset($postData['job_title'])) {
-                            
+                                $sess= $_POST['session'];
                                 $job->setJobDeadline($postData['job_deadline']);
                                 $job->setJobTitle($postData['job_title']);
                                 $job->setJobDescription($postData['job_description']);
@@ -90,19 +98,18 @@ class IndexController extends AbstractActionController {
 				$em->persist($job);
 				$em->flush();
 				$this->flashMessenger()->addMessage('<div class="alert alert-success">Success</div>');
-				$this->redirect()->toRoute('home');
+                                return $this->redirect()->toUrl('/index?sess='.$sess);
 			}
                 }
         }
         public function editAction() {
 		$id = $this->params('id');
 		$job = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default')->find('\KJ\Entity\Bjob', $id);               
-		if(null == $job){
-			$this->redirect()->toRoute('home/action', array('action' => 'index'));
-		}
+		
 		return new ViewModel(array(
 			'job' => $job,
 			'submitText' => 'Update',
+                        'session' =>$_POST['session']
 		));
 	}
         public function detailAction()
@@ -131,7 +138,7 @@ class IndexController extends AbstractActionController {
             $cat->setCatName($post->cat_name);		
             $this->getEntityManager()->persist($cat);
             $this->getEntityManager()->flush();       
-            return $this->redirect()->toRoute('home'); 
+          //  return $this->redirect()->toRoute('home'); 
         }       
     
 // about subject      
@@ -156,7 +163,7 @@ class IndexController extends AbstractActionController {
             $this->getEntityManager()->persist($sub);
             $this->getEntityManager()->persist($catsub); 
             $this->getEntityManager()->flush();       
-            return $this->redirect()->toRoute('home');           			
+        //    return $this->redirect()->toRoute('home');           			
 	}
         
         
@@ -164,10 +171,8 @@ class IndexController extends AbstractActionController {
  // about company      
         public function editCompanyAction()
         {
-          //  $id = $this->params('');
-            $id = 214;
+              $id =   $this->getCategoryTable()->user();         
 		$company = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default')->find('\KJ\Entity\ACompany', $id);               
-		
                 if(null == $company){
 			$this->redirect()->toRoute('home/action', array('action' => 'index'));
 		}
@@ -178,6 +183,7 @@ class IndexController extends AbstractActionController {
         }
         public function UpdateCompanyAction()
         {
+            $sess= $_POST['session'];
             $request = $this->getRequest();
 		if ($request->isPost()) {
 			$postData = (array) $request->getPost();
@@ -199,18 +205,11 @@ class IndexController extends AbstractActionController {
 				$em->persist($com);
 				$em->flush();
 				$this->flashMessenger()->addMessage('<div class="alert alert-success">Success</div>');
-				$this->redirect()->toRoute('home');
+                                return $this->redirect()->toUrl('/index?sess='.$sess);
+			//	$this->redirect()->toRoute('home');
 			}
            }
         }
-        public function pdfAction()
-        {
-            
-        }
-
-        
-
-
 
         /**
 	 * Entity manager instance

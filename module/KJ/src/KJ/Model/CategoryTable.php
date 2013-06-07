@@ -17,25 +17,25 @@ class CategoryTable {
     $this->tableGateway = $tableGateway;
   }
  
-  public function findAll()
-  {
-      return $this->tableGateway->getAdapter()->query('select * from b_job as b 
-                                                        join b_jobcategory as a on b.jcat_id = a.jcat_id
-                                                        join a_company as c on a.com_id = c.com_id
-                                                        where c.com_id = 211',  
-							\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
-  }
-  public function findAll1($jcat_id)
-  {
-      return $this->tableGateway->getAdapter()->query('select * from a_jobs_jseeker as a  
-														join jobs_users as b on b.id = a.user_id	
-                                                        join b_jobcategory as c on a.jcat_id = c.jcat_id
-                                                        join a_company as d on d.com_id = c.com_id
-                                                        where d.com_id =211 AND c.jcat_id ='.$jcat_id,          
-							\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
-      
-       
-  }
+//  public function findAll()
+//  {
+//      return $this->tableGateway->getAdapter()->query('select * from b_job as b 
+//                                                        join b_jobcategory as a on b.jcat_id = a.jcat_id
+//                                                        join a_company as c on a.com_id = c.com_id
+//                                                        where c.com_id = 211',  
+//							\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+//  }
+//  public function findAll1($jcat_id)
+//  {
+//      return $this->tableGateway->getAdapter()->query('select * from a_jobs_jseeker as a  
+//							join jobs_users as b on b.id = a.user_id	
+//                                                        join b_jobcategory as c on a.jcat_id = c.jcat_id
+//                                                        join a_company as d on d.com_id = c.com_id
+//                                                        where d.com_id =211 AND c.jcat_id ='.$jcat_id,          
+//							\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+//      
+//       
+//  }
    public function findAll3()
   {
        $ii = null;
@@ -110,6 +110,14 @@ class CategoryTable {
               ,\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
       return $pdf;
   }
-
   
+  public function user(){  
+        $user_id = $this->tableGateway->getAdapter()->query(" select com_id from a_company as a
+                        join jobs_session as c on  c.userid =a.user_id   
+                         "
+              ,\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+      foreach ($user_id as $u){
+    }
+    return $u->com_id;;
+  }
 }

@@ -1,5 +1,18 @@
+<?php 
+$sess = isset($_GET['sess']) ? $_GET['sess'] : "";
+?>
+
+
+
+
 <form class="form-horizontal" method="post" action="<?php echo $this->url('home/action', array('action' => 'UpdateCompany')) ?>">   
     <fieldset>
+        <div class="control-group">
+            <label class="control-label" ></label>
+            <div class="controls">  
+                <input type="hidden" name="session" value="<?php echo $sess ?>" />
+            </div>
+        </div>
                
         <div class="control-group">
             <label class="control-label" for="inputEmail"></label>

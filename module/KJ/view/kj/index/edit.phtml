@@ -1,5 +1,26 @@
+<script type="text/javascript" src="/tinyeditor/nicEdit.js"></script>
+
+<script type="text/javascript">
+                //<![CDATA[
+                bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+                 //]]>
+</script>
+
+<script type="text/javaScript">
+    $(function() {
+     $(".datepicker").datepicker();
+   });
+</script>
+
 <form class="form-horizontal" method="post" method="post" action="<?php echo $this->url('home/action', array('action' => 'update')) ?>">   
     <fieldset>
+        <div class="control-group">
+            <label class="control-label" for="#"></label>
+            <div class="controls">
+                <input type="hidden" name="session" value="<?php echo $session ?>" />
+            </div>
+        </div>
+        
         <div class="control-group">
             <label class="control-label" for="#"></label>
             <div class="controls">
@@ -45,21 +66,21 @@
          <div class="control-group">
             <label class="control-label" for="#">About company</label>
             <div class="controls">
-                <input type="text" name ="about_company" value="<?php echo $job->getAboutCompany(); ?>">
+                <textarea rows="3" name="about_company" style="width: 70%;"><?php echo $job->getAboutCompany(); ?></textarea>
           </div>
          </div>
             
          <div class="control-group">
             <label class="control-label" for="#">Description</label>
             <div class="controls">
-                <textarea rows="3" name="job_description"> <?php echo $job->getJobDescription(); ?></textarea>
-          </div>
+                <textarea rows="2" name="job_description" style="width: 70%;"><?php echo $job->getJobDescription(); ?></textarea>
+            </div>
         </div>
             
         <div class="control-group">
             <label class="control-label" for="inputEmail">How apply </label>
             <div class="controls">
-                <textarea rows="3" name="job_apply"><?php echo $job->getJobApply(); ?></textarea>
+                <textarea rows="1" name="job_apply" style="width: 70%;"><?php echo $job->getJobApply(); ?></textarea>
           </div>
         </div>
             

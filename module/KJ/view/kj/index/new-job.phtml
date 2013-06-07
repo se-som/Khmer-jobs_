@@ -1,14 +1,33 @@
+<script type="text/javascript" src="/tinyeditor/nicEdit.js"></script>
+<script type="text/javascript">
+                //<![CDATA[
+                bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+                 //]]>
+</script>
+<script type="text/javaScript">
+    $(function() {
+     $(".datepicker").datepicker();
+   });
+</script>
 <?php 
+
+ $sess = isset($_GET['sess']) ? $_GET['sess'] : "";
 
 foreach ($com as $d){
 
     
 }
-$com_id =$d->com_id;
+$com_id = $d->com_id;
 ?>
 
-<form class="form-horizontal" method="post" action="<?php echo $this->url('home/action', array('action' => 'createJobByForm')) ?>">
+<form class="form-horizontal" method="post" action="<?php echo $this->url('home/action', array('action' => 'new-job')) ?>">
     <fieldset>
+        <div class="control-group">
+            <label class="control-label"></label>
+            <div class="controls">
+                <input type="hidden" name ="session"  value="<?php echo $sess;  ?>">     
+            </div>
+        </div>
         
         <div class="control-group">
             <label class="control-label" for="inputEmail"></label>
@@ -67,21 +86,21 @@ $com_id =$d->com_id;
         <div class="control-group">
             <label class="control-label" for="inputEmail">About company</label>
             <div class="controls">
-                <input type="text" name ="about_company" placeholder="About your company…">
+                 <textarea rows="3" name="about_company" style="width: 70%;"></textarea>
             </div>
          </div>
             
         <div class="control-group">
             <label class="control-label" for="inputEmail">Description</label>
             <div class="controls">
-                <textarea rows="3" name="job_description" placeholder="job description…"></textarea>
+                <textarea rows="3" name="job_description" style="width: 70%;"></textarea>
             </div>
         </div>
             
         <div class="control-group">
             <label class="control-label" for="inputEmail">How apply</label>
             <div class="controls">
-                <textarea rows="3" name="job_apply" placeholder="how apply…"></textarea>
+                <textarea rows="3" name="job_apply" style="width: 70%;"></textarea>
             </div>
         </div>
             
@@ -91,5 +110,13 @@ $com_id =$d->com_id;
                 <button type="submit" class="btn">Submit</button>
             </div>
         </div>
+       
     </fieldset>
 </form>
+	
+
+
+
+	
+
+

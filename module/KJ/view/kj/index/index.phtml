@@ -3,8 +3,14 @@
         <th>job title</th>
         <th>job category</th>
         <th>job deadline</th>
+        <th>Edit</th>
+        <th>Delete</th>
    </tr>
 <?php
+ 
+$sess = isset($_GET['sess']) ? $_GET['sess'] : "";
+
+
 foreach ($com as $d){
 }
 $session_id = $d->com_id;
@@ -15,20 +21,23 @@ foreach ($jobs as $job) {
 	echo'<td>'. $job->getJobTitle().'</td>';  
 	echo'<td>'.($job->getJcat()->getCat()->getCatName()).'</td>';
         echo'<td>'. $job->getJobDeadline().'</td>'; 
-        echo '<td><a href="' . $this->url('home/action', array('action' => 'edit', 'id' =>$job->getJobId())) . '" class="icon-pencil-2"></a></td>';
-        echo '<td><input class="url" type="hidden" value="'.$this->url('home',array('action'=>'delete','id'=>$job->getJcat()->getJcatId())).' " />  <a href="delete/'.$job->getJcat()->getJcatId().'" class="icon-remove deleteIcon"> </a> </td>';       
+        //echo '<td><a href="' . $this->url('home/action', array('action' => 'edit', 'id' =>$job->getJobId())) . '" ><i class="icon-edit"></i></a></td>';
+        echo '<td>';
+            echo '<form method="post" action="'. $this->url('home/action', array('action' => 'edit', 'id' =>$job->getJobId())) .'">';
+            echo '<input type="hidden" name="session" value="'. $sess.'">';
+            echo '<button type="submit" ><i class="icon-edit"></button>';
+            echo '</form>';
+        echo '</td>';
+        echo '<td>';
+            echo '<form method="post" action= "'. $this->url('home/action',array('action'=>'delete','id'=>$job->getJcat()->getJcatId())) .'  " >';
+            echo '<input type="hidden" name="session" value="'. $sess.'">';
+            echo '<button type="submit" ><i class="icon-trash"></button>';
+            echo '</form>';
+        echo '</td>';    
+        //echo '<td><input class="url" type="hidden" value="'.$this->url('home',array('action'=>'delete','id'=>$job->getJcat()->getJcatId())).' " />  <a href="delete/'.$job->getJcat()->getJcatId().'" ><i class="icon-trash"></i></a> </td>';          
         echo '<td><a href= "'. $this->url('home/action', array('action'=> 'detail', 'id' =>$job->getJobId())) . ' ">detail</a></td>';
         echo '</tr>';
    }
   }
 ?>
 </table>
-<script type="text/javascript">
-	jQuery(document).ready(function (){
-		jQuery('.deleteIcon').click(function (){
-			var url = jQuery(this).parent().find('.url').val();
-			jQuery('#linkDelete').attr('href', url);
-			jQuery('#deleteConfirmation').modal('');
-		});
-	});
-</script>

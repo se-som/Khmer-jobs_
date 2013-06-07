@@ -29,25 +29,22 @@ class JobController extends AbstractActionController {
        public function pdfAction()
         {
         $user_id = (int) $this->params()->fromRoute('id', 1); 
-      //  echo $_POST['jcat_id'];
-        
-        
+ //     echo $_POST['jcat_id'];
         $d = $this->getCategoryTable()->pdf($user_id,  $_POST['jcat_id']);
  //       $cv = $this->getCategoryTable()->cv($user_id);
-        
-//        $pdf = new PdfModel();
-//        $pdf->setOption('filename', 'monthly-report'); // Triggers PDF download, automatically appends ".pdf"
-//        $pdf->setOption('paperSize', 'a4'); // Defaults to "8x11"
-//        $pdf->setOption('paperOrientation', 'landscape'); // Defaults to "portrait"       
-//        // To set view variables
-//        $pdf->setVariables(array(
-//          'pdf1' => $d
-//        ));      
-//        return $pdf; 
-        return new ViewModel (array(
-                'pdf1' => $d,
+        $pdf = new PdfModel();
+        $pdf->setOption('filename', 'monthly-report'); // Triggers PDF download, automatically appends ".pdf"
+        $pdf->setOption('paperSize', 'a4'); // Defaults to "8x11"
+        $pdf->setOption('paperOrientation', 'landscape'); // Defaults to "portrait"       
+        // To set view variables
+        $pdf->setVariables(array(
+          'pdf1' => $d
+        ));      
+        return $pdf; 
+//        return new ViewModel (array(
+ //               'pdf1' => $d,
  //               'cv' => $cv
-            ));   
+  //          ));   
         
         }
        
