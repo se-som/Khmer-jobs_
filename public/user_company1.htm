@@ -1,0 +1,15 @@
+
+
+    
+	<iframe id="preview" src="user_company1_files/a.htm" frameborder="0" height="623px" width="100%"></iframe>
+	<script src="user_company1_files/jquery.js"></script>
+	<script>
+			$(document).ready(function(){
+					function fix_height(){
+							var h = $("#tray").height();   
+							$("#preview").attr("height", (($(window).height()) - h) + "px");
+					}
+					$(window).resize(function(){ fix_height(); }).resize();
+					//$("#preview").contentWindow.focus();
+			});
+	</script>

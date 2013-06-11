@@ -16,10 +16,14 @@ class IndexController extends AbstractActionController {
     public function indexAction() {
             $sess = isset($_GET['sess']) ? $_GET['sess'] : "";                      
 		$jobs = $this->getEntityManager()->getRepository('\KJ\Entity\BJob')->findAll();
-                $coms = $this->getCategoryTable()->findAll4($sess);   
-                return new ViewModel(array(
-			'jobs' => $jobs,  
-                        'com' => $coms
+               
+                $coms = $this->getCategoryTable()->findAll4($sess); 
+                $count = $this->getCategoryTable()->count();
+                $co = array( 'jj'=>$jobs, 'count'=> $count);
+   
+                return new ViewModel(array(  
+                    'com' => $coms,
+                    'jobs' => $co
 		));
 	}
         
@@ -61,7 +65,7 @@ class IndexController extends AbstractActionController {
         public function deleteAction() {
                 $sess= $_POST['session'];
 		$id = $this->params('id');
-		$job = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default')->find('\KJ\Entity\Bjobcategory', $id);         
+		$job = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default')->find('\KJ\Entity\Bjob', $id);         
 		if(null == $job){
 			$this->redirect()->toRoute('home', array('controller' => 'job', 'action' => 'index'));
 		}

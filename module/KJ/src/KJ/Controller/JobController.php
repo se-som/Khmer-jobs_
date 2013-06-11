@@ -40,12 +40,15 @@ class JobController extends AbstractActionController {
         $pdf->setVariables(array(
           'pdf1' => $d
         ));      
-        return $pdf; 
-//        return new ViewModel (array(
- //               'pdf1' => $d,
- //               'cv' => $cv
-  //          ));   
+        return $pdf;   
         
+        }
+        public function dashboardAction()
+        {
+            $das = $dashboard =$this->getCategoryTable()->dashboard();
+            return new ViewModel (array(
+                'dashboard' => $das
+            ));  
         }
        
 }

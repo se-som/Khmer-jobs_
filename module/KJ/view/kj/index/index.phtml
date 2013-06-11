@@ -1,10 +1,26 @@
+<style>
+	tr{
+		height: 20px;
+		
+	}
+	td{
+		height: 10px;
+/*		width: 5px;*/
+	}
+	form{
+		height: 3px;
+	  }
+</style>
 <table  class="table table-striped table-hover">
     <tr>
-        <th>job title</th>
-        <th>job category</th>
-        <th>job deadline</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        
+        <th>Job title</th>
+        <th style="text-align:center">Job category</th>
+        <th style="text-align:center">Job deadline</th>
+        <th style="text-align:center">User applied</th>
+        <th style="text-align:center">Edit</th>
+        <th style="text-align:center">Delete</th>
+	<th style="text-align:center">Detail</th>
    </tr>
 <?php
  
@@ -14,28 +30,40 @@ $sess = isset($_GET['sess']) ? $_GET['sess'] : "";
 foreach ($com as $d){
 }
 $session_id = $d->com_id;
-foreach ($jobs as $job) { 
+foreach ($jobs['jj'] as $job) { 
+    $jca = $job->getJcat()->getJcatId();
+   
    $com_id = $job->getJcat()->getCom()->getComId();
    if($session_id == $com_id){
     echo '<tr>';
 	echo'<td>'. $job->getJobTitle().'</td>';  
-	echo'<td>'.($job->getJcat()->getCat()->getCatName()).'</td>';
-        echo'<td>'. $job->getJobDeadline().'</td>'; 
+	echo'<td style="text-align:center">'.($job->getJcat()->getCat()->getCatName()).'</td>';
+        echo'<td style="text-align:center">'. $job->getJobDeadline().'</td>'; 
+        echo '<td style="text-align:center">';
+            $count = 0;
+            foreach ($jobs['count'] as $cou){
+                $jc = $cou->jcat_id;
+                if($jca == $jc){
+                    $count++;
+                }   
+            }
+            echo '<div>'.$count.'</div>';
+    echo '</td>';
         //echo '<td><a href="' . $this->url('home/action', array('action' => 'edit', 'id' =>$job->getJobId())) . '" ><i class="icon-edit"></i></a></td>';
-        echo '<td>';
+        echo '<td style="text-align:center">';
             echo '<form method="post" action="'. $this->url('home/action', array('action' => 'edit', 'id' =>$job->getJobId())) .'">';
             echo '<input type="hidden" name="session" value="'. $sess.'">';
             echo '<button type="submit" ><i class="icon-edit"></button>';
             echo '</form>';
         echo '</td>';
-        echo '<td>';
-            echo '<form method="post" action= "'. $this->url('home/action',array('action'=>'delete','id'=>$job->getJcat()->getJcatId())) .'  " >';
+        echo '<td style="text-align:center">';
+            echo '<form method="post" action= "'. $this->url('home/action',array('action'=>'delete','id'=>$job->getJobId())) .'  " >';
             echo '<input type="hidden" name="session" value="'. $sess.'">';
-            echo '<button type="submit" ><i class="icon-trash"></button>';
+            echo '<button type="submit"><i class="icon-trash"></button>';
             echo '</form>';
         echo '</td>';    
         //echo '<td><input class="url" type="hidden" value="'.$this->url('home',array('action'=>'delete','id'=>$job->getJcat()->getJcatId())).' " />  <a href="delete/'.$job->getJcat()->getJcatId().'" ><i class="icon-trash"></i></a> </td>';          
-        echo '<td><a href= "'. $this->url('home/action', array('action'=> 'detail', 'id' =>$job->getJobId())) . ' ">detail</a></td>';
+        echo '<td style="text-align:center"><a href= "'. $this->url('home/action', array('action'=> 'detail', 'id' =>$job->getJobId())) . ' ">detail</a></td>';
         echo '</tr>';
    }
   }

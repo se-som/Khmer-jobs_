@@ -1,12 +1,17 @@
-
+<p style="border-r" >
+	
+</p>
 <?php 
+echo '<div style="margin-left:100px; border-radius: 20px;">';
 echo 'Company name :'. $jobs->getJcat()->getCom()->getComName().'<br />';
 echo 'Title :' . $jobs->getJobTitle().'<br />';
 echo 'Close date :'.$jobs->getJobDeadline().'<br />';
 echo 'Location :'. $jobs->getJobLocation().'<br />';
 echo 'Salary :'. $jobs->getJobSalary(). '<br />';
-echo '<h2>About company:</h2> <br />';
-echo $jobs->getAboutCompany(). '<br />';
+//echo '<h4>';
+echo '<h4>About company:</h4>'.$jobs->getAboutCompany();
+//echo '</h4>';
+//echo //$jobs->getAboutCompany(). '<br />';
 echo '<h2>Benefit :</h2> <br />';
 echo $jobs->getJobBenefit(). '<br />';
 echo '<h2>Description :</h2> <br />';
@@ -24,7 +29,8 @@ echo '<strong>Address :'. $jobs->getJcat()->getCom()->getComLocation(). '</stron
  echo '<abbr> Email : '. $jobs->getJcat()->getCom()->getComEmail().'</abbr><br />';
  echo '<abbr> Email : '.'<a href="http://'.$jobs->getJcat()->getCom()->getComWeb().' ">'.$jobs->getJcat()->getCom()->getComWeb() .'  </a>' .'</abbr><br />';
  echo  '</address> ';
-?>
+echo '</div>';
+ ?>
     
    
 

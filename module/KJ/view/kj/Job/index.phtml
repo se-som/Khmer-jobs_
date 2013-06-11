@@ -1,32 +1,84 @@
 
+<style>
+	th{
+		width: 100px;	
+	}
+	table{
+		width: 600px;
+	}
+</style>
+
+
 <?php if($jjs != null){ ?>
-<table border="1">
-    <tr>
-        <th>job title</th>
-        <th> user apply </th>
-    </tr>
 <?php 
+$skil = array();
     foreach ($jjs as $jobs){
-        
+     //   var_dump($jobs);
         $jcat = $jobs['jcat_id'];
-        echo '<tr>';  
-          echo '<td>'.$jobs['title'].'</td>';        
-          echo '<td>';
-            foreach ($jobs['us'] as $n){ 
-               $jca = $n->jcat_id;
-               
-               if($jca == $jcat){
-//                    echo  '<span class="label label-success"> '.$n->username.'</span> : <a href=" '. $this->url('jobs/pdf', array('controller'=> 'Job', 'action' => 'pdf', 'id' =>$n->id)) . ' " > [<img src ="./images/pdf.png">]</a> <br /> ';
-//                   echo  '<span class="label label-success"> '.$n->username.'</span> :';
-                   echo '<form method="post" action="'.$this->url('jobs/pdf', array('controller'=> 'Job', 'action' => 'pdf', 'id' =>$n->id)).'">';
-                   echo '<input type="hidden" name="jcat_id" value="'.$n->jcat_id.'">';
-                   echo $n->username. ': <input type="image"  src = "./images/pdf.png ">';
-                   echo '</form>';             
-                    
-               }
-            }  
-            echo '</td>';
-       echo '</tr>';
+		echo '<h4 style="margin-left:100px; color: royalblue;">'. $jobs['title'].'</h4>'; 
+		echo '<table border="1" style="margin-left: 100px; ">';
+			echo '<tr style="color:black; background-color: lightgoldenrodyellow; height:50px;">
+				<th>User name</th>
+				<th>skill</th>
+				<th>Close date</th>
+				<th>Percentage</th>
+				<th>CV and cover</th>		
+			</tr>';
+			foreach ($jobs['us'] as $n){ 
+					$jca = $n->jcat_id;
+					$user_id = $n->id;
+					if($jca == $jcat){ 
+						echo '<tr>';
+						echo '<td>';
+							echo '<span>'.$n->username. '</span>' ;
+						echo '</td>';
+						echo '<td>';
+							foreach ($jobs['skill'] as $ski){
+								$ss= $ski->user_id;
+								if($ss == $user_id){
+									echo $ski['skill_name'].',';
+								}
+							}
+						echo '</td>';
+						
+						echo '<td>';
+							echo $jobs['job_deadline'];
+						echo '</td>';
+						echo '<td>';
+							echo 'percentage';
+						echo '</td>';
+						echo '<td style="text-align:center>';
+							echo '<form method="post" action="'.$this->url('jobs/pdf', array('controller'=> 'Job', 'action' => 'pdf', 'id' =>$n->id)).'">';
+							echo '<input type="hidden" name="jcat_id" value="'.$n->jcat_id.'">';
+							echo ' <input type="image"  src = "./images/pdf.png ">';
+							echo '</form>'; 
+						echo '</td>';
+						
+						
+						echo '</tr>';
+					}
+				
+				
+            }
+			
+			
+			
+		echo '</table> <br />'; 
+       
+
+//            foreach ($jobs['us'] as $n){ 
+//               $jca = $n->jcat_id;
+//               
+//               if($jca == $jcat){                 
+//                   echo '<form method="post" action="'.$this->url('jobs/pdf', array('controller'=> 'Job', 'action' => 'pdf', 'id' =>$n->id)).'">';
+//                   echo '<input type="hidden" name="jcat_id" value="'.$n->jcat_id.'">';
+//                   echo $n->username. ': <input type="image"  src = "./images/pdf.png ">';
+//                   echo '</form>';             
+//                    
+//               }
+//            }  
+//            echo '</td>';
+//       echo '</tr>';
     }
 ?>
 </table>
