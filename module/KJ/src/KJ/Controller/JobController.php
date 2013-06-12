@@ -41,7 +41,10 @@ class JobController extends AbstractActionController {
           'pdf1' => $d
         ));      
         return $pdf;   
-        
+//        return new ViewModel (array(
+//                'pdf1' => $d
+//            ));  
+//        
         }
         public function dashboardAction()
         {

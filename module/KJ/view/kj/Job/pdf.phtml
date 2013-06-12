@@ -1,7 +1,38 @@
 <?php
+
 foreach ($pdf1 as $pdf){
-    echo $pdf->last_name. '<br />'; 
-   echo $pdf->first_name. '<br />';
+   echo '<h3>'.$pdf->first_name.' '.$pdf->last_name.'</h3><br />'; 
+   echo '<h4>Contact Details</h4>';
+   echo $pdf->address;
+   echo $pdf->email;
+   echo $pdf->apply_date;
+   $edu = unserialize($pdf->edu);
+   echo '<h4>Education</h4>';
+   foreach ($edu as $ed)
+   {
+       echo $ed['edu_date'].'  : <h5>School name</h5> '.$ed['edu_schoolName'];
+                                   echo ' <h5>Education field:</h5>'.$ed['edu_field'];
+                                   echo ' <h5>Education degree:</h5>'.$ed['edu_degree'];
+                                   echo ' <h5>Activity:</h5>'.$ed['edu_activities'];
+                                   
+   }
+   $skil = unserialize($pdf->skill);
+   echo '<h4>skill</h4>';
+   foreach ($skil as $si){
+       echo $si['skill_name'].'<br />';
+   }
+   $exp = unserialize($pdf->exp);
+   foreach ($exp as $ex){
+     
+       echo $ex['exp_position'].'<br />';
+       echo $ex['exp_company'].'<br />';
+       echo $ex['exp_date'].'<br />';
+       echo $ex['exp_summary'].'<br />';
+   }
+   
+   echo $pdf->interest;
+
+
 echo $pdf->cover_desc. '<br /><br />';
 }
 ?>

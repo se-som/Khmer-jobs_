@@ -8,7 +8,6 @@
 	}
 </style>
 
-
 <?php if($jjs != null){ ?>
 <?php 
 $skil = array();
@@ -40,21 +39,18 @@ $skil = array();
 								}
 							}
 						echo '</td>';
-						
 						echo '<td>';
 							echo $jobs['job_deadline'];
 						echo '</td>';
 						echo '<td>';
 							echo 'percentage';
 						echo '</td>';
-						echo '<td style="text-align:center>';
+						echo '<td>';
 							echo '<form method="post" action="'.$this->url('jobs/pdf', array('controller'=> 'Job', 'action' => 'pdf', 'id' =>$n->id)).'">';
 							echo '<input type="hidden" name="jcat_id" value="'.$n->jcat_id.'">';
 							echo ' <input type="image"  src = "./images/pdf.png ">';
 							echo '</form>'; 
 						echo '</td>';
-						
-						
 						echo '</tr>';
 					}
 				

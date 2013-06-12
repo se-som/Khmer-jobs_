@@ -1,6 +1,24 @@
 <p style="border-r" >
 	
 </p>
+<script src="//platform.linkedin.com/in.js" type="text/javascript">
+ lang: en_US
+</script>
+<script type="IN/Share"></script>
+
+<script type="text/javascript" src="http://platform.linkedin.com/in.js"></script><script type="in/share" data-counter="right" data-success="LinkedInShare"></script><script type="text/javascript">LinkedInShare();</script>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-send" data-href="http://example.com"></div>
+
+
 <?php 
 echo '<div style="margin-left:100px; border-radius: 20px;">';
 echo 'Company name :'. $jobs->getJcat()->getCom()->getComName().'<br />';
@@ -31,6 +49,12 @@ echo '<strong>Address :'. $jobs->getJcat()->getCom()->getComLocation(). '</stron
  echo  '</address> ';
 echo '</div>';
  ?>
+
+
+
+    <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
+
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
     
    
 
