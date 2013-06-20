@@ -10,7 +10,22 @@
 	form{
 		height: 3px;
 	  }
+          
+    h2 {
+	display: inline;
+	position: relative;
+	font: 40px Helvetica, Sans-Serif;
+	letter-spacing: -5px;
+	color: rgba(0,0,255,0.5); 
+}
+    h2:after {
+   
+	position: absolute; left: 10px; top: 5px;
+	color: rgba(255,0,0,0.5);   
+}
 </style>
+<div style = "text-align: center"><h2>List jobs your post</h2></div><br />
+<ifram>
 <table  class="table table-striped table-hover">
     <tr>
         
@@ -69,3 +84,4 @@ foreach ($jobs['jj'] as $job) {
   }
 ?>
 </table>
+    </ifram>

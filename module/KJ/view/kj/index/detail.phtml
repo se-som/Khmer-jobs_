@@ -1,13 +1,70 @@
-<p style="border-r" >
-	
-</p>
-<script src="//platform.linkedin.com/in.js" type="text/javascript">
- lang: en_US
-</script>
-<script type="IN/Share"></script>
+<style>
+    h1 {
+	display: inline;
+	position: relative;
+	font: 50px Helvetica, Sans-Serif;
+	letter-spacing: -5px;
+	color: rgba(0,0,255,0.5); 
+}
+    h1:after {
+	position: absolute; left: 10px; top: 5px;
+	color: rgba(255,0,0,0.5);   
+}
+    h4 {
+        color: #006dcc;
+}
 
-<script type="text/javascript" src="http://platform.linkedin.com/in.js"></script><script type="in/share" data-counter="right" data-success="LinkedInShare"></script><script type="text/javascript">LinkedInShare();</script>
+</style>
+<ifram>
+<div  style="border:2px solid">
+<?php 
+    echo '<div style="margin-left:50px;">';
+    echo '<div   id="aligned-middle" class="inline-block" style = "text-align: center"><h1>'.$jobs->getJcat()->getCom()->getComName().'</h1></div>';
+    echo '<dl class="dl-horizontal">';
+        echo '<dt>Title : </dt>';
+        echo '<dd>'.$jobs->getJobTitle().'</dd>';
+        echo '<dt>Close date :</dt>';      
+        echo '<dd>'.$jobs->getJobDeadline().'</dd>';
+        echo '<dt>Location :</dt>';
+        echo '<dd>'.$jobs->getJobLocation().'</dd>';
+        echo '<dt>Salary :</dt>';
+        echo '<dd>'.$jobs->getJobSalary().'</dd>';
+    echo '</dl>';
+    
+echo '<h4>Benefit :</h4> ';
+echo '<div style="margin-left:50px;">'.$jobs->getJobBenefit().'</div>';
 
+echo '<h4>About company:</h4>';
+echo '<div style="margin-left:50px;">'.$jobs->getAboutCompany().'</div>';
+
+echo '<h4>Description :</h4>';
+echo '<div style="margin-left:50px;">'.$jobs->getJobDescription().'</div>';
+
+echo '<h4>How apply :</h4>';
+echo '<address>';
+echo $jobs->getJobApply();
+echo '</address>';
+echo '<h4>Contact information :</h4>';
+echo '<address>';
+    echo '<dl class="dl-horizontal">';
+        echo '<dt>Address :</dt>';
+        echo '<dd>'.$jobs->getJcat()->getCom()->getComLocation().'</dd>';
+        echo '<dt>Tel :</dt>';
+        echo '<dd>'.$jobs->getJcat()->getCom()->getComPhone() .'</dd>';
+        echo '<dt>Email :</dt>';
+        echo '<dd>'.$jobs->getJcat()->getCom()->getComEmail().'</dd>';
+        echo '<dt>Web site :</dt>';
+        echo '<dd>'.'<a href="http://'.$jobs->getJcat()->getCom()->getComWeb().' ">'.$jobs->getJcat()->getCom()->getComWeb() .'  </a>' .'</dd>';
+    echo '<dl>';
+echo  '</address> ';
+echo '</div>';
+ ?>
+</div>
+</ifram>
+<br />
+<ifram>
+<!--  this the function for share line to facebook -->   
+<div style = "text-align: center; background-color: azure; width: 300px;" >
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -18,44 +75,27 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 <div class="fb-send" data-href="http://example.com"></div>
 
+<!-- This is the function for share line to twitter -->
+<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
+<script>!function(d,s,id){
+var js,fjs=d.getElementsByTagName(s)[0];
+    if(!d.getElementById(id)){
+        js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);
+    }
+}(document,"script","twitter-wjs");
+</script>
 
-<?php 
-echo '<div style="margin-left:100px; border-radius: 20px;">';
-echo 'Company name :'. $jobs->getJcat()->getCom()->getComName().'<br />';
-echo 'Title :' . $jobs->getJobTitle().'<br />';
-echo 'Close date :'.$jobs->getJobDeadline().'<br />';
-echo 'Location :'. $jobs->getJobLocation().'<br />';
-echo 'Salary :'. $jobs->getJobSalary(). '<br />';
-//echo '<h4>';
-echo '<h4>About company:</h4>'.$jobs->getAboutCompany();
-//echo '</h4>';
-//echo //$jobs->getAboutCompany(). '<br />';
-echo '<h2>Benefit :</h2> <br />';
-echo $jobs->getJobBenefit(). '<br />';
-echo '<h2>Description :</h2> <br />';
-echo $jobs->getJobDescription(). '<br />';
-
-echo '<h2>How apply :</h2> <br />';
-echo '<address>';
-echo $jobs->getJobApply(). '<br />';
-echo '</address>';
-echo '<h2>Contact Information</h2>';
-
-echo '<address>';
-echo '<strong>Address :'. $jobs->getJcat()->getCom()->getComLocation(). '</strong><br />';
- echo '<abbr> Tel :'. $jobs->getJcat()->getCom()->getComPhone().'</abbr><br />';
- echo '<abbr> Email : '. $jobs->getJcat()->getCom()->getComEmail().'</abbr><br />';
- echo '<abbr> Email : '.'<a href="http://'.$jobs->getJcat()->getCom()->getComWeb().' ">'.$jobs->getJcat()->getCom()->getComWeb() .'  </a>' .'</abbr><br />';
- echo  '</address> ';
-echo '</div>';
- ?>
+<!--- there the function for share line to linedId -->
+<script type="text/javascript" src="http://platform.linkedin.com/in.js">
+</script>
+<script type="in/share" data-counter="right" data-success="LinkedInShare">
+</script>
+<script type="text/javascript">LinkedInShare();
+</script>
+</div>
+</ifram>
 
 
-
-    <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
-
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    
    
 
     
