@@ -1,31 +1,46 @@
 
-<form class="form-horizontal" method="post" action="<?php echo $this->url('home/action', array('action' => 'createSubjectForm')) ?>">
-    <fieldset>
-        <div class="control-group">
-            <label class="control-label" for="inputEmail">Subject</label>
-            <div class="controls">
-                <input type="text" name ="sub_name" placeholder="subject name…">
-            </div>
-        </div>
-        
-        <div class="control-group">
-            <label class="control-label" for="inputEmail">Category</label>
-            <div class="controls">
-                <select name="cat_id">
-		 <?php foreach($category as $c) {
-                            echo '<option value=' . $c->getCatId() . '>' . $c->getCatName(). '</option>';
-			}
-		 ?>
-                </select>
-            </div>
-        </div>
-        
-        <div class="control-group">
-            <label class="control-label" for="inputEmail"></label>
-            <div class="controls">
-                <button type="submit" class="btn">Submit</button>
-            </div>
-        </div>
-    </fieldset>
-</form>
 
+
+
+<?php
+// module/Job/view/Job/Subject/add.phtml:
+$ids = $id;
+$title = 'Add new subject';
+$this->headTitle($title);
+?>
+
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('home/action', array('action' => 'new-subject')));
+$form->prepare();
+
+echo '<div class="label">';
+echo '<h2 class ="ui-widget-header">';
+    echo $this->escapeHtml($title);
+echo '</h2>';
+
+//echo'<form class="form-horizontal">';
+echo $this->form()->openTag($form);
+
+ echo '<div class="control-group">';
+    echo '<label class="control-label"></label>';
+        echo '<div class="controls">';     
+   ?>
+    <input type ="hidden" name ="cat_id" value =" <?php  echo $ids ?> ">
+   <?php
+    echo '</div>';
+    echo '</div>';    
+    echo '<div class="control-group">';
+    echo '<label class="control-label">Subject:</label>';
+        echo '<div class="controls">';
+            echo $this->formRow($form->get('sub_name'));
+        echo '</div>';
+    echo '</div>';
+    
+echo $this->formSubmit($form->get('submit'));
+echo $this->form()->closeTag();
+echo '</div>';
+
+
+?>
+<!-- <style>.labels{text-align: right}</style> -->

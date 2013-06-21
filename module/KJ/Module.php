@@ -15,7 +15,8 @@ use Zend\Mvc\MvcEvent;
 
 use KJ\Model\Category;
 use KJ\Model\CategoryTable;
-
+use KJ\Model\Subject;
+use KJ\Model\SubjectTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -57,6 +58,17 @@ class Module {
                     //$resultSetPrototype->setArrayObjectPrototype(new Category());
                     return new TableGateway('B_category', $dbAdapter, null, $resultSetPrototype);
                 },
+		'KJ\Model\SubjectTable' =>  function($sm) {
+                    $tableGateway = $sm->get('SubjectTableGateway');
+                    $table = new SubjectTable($tableGateway);
+                    return $table;
+                },
+                'SubjectTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Subject());
+                    return new TableGateway('B_subject', $dbAdapter, null, $resultSetPrototype);
+                }, 
 			),
 		);
 	}

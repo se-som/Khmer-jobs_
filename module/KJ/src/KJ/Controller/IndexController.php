@@ -8,11 +8,18 @@ namespace KJ\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use KJ\Model\Category;
+use KJ\Form\SubjectForm;
+use KJ\Model\Subject;
+use KJ\Model\SubjectTable;
+ 
+
 
 class IndexController extends AbstractActionController {
     protected $category;
     protected $session;
-    
+    protected $subjectTable;
+
+
     public function indexAction() {
             $sess = isset($_GET['sess']) ? $_GET['sess'] : "";                      
 		$jobs = $this->getEntityManager()->getRepository('\KJ\Entity\BJob')->findAll();
@@ -130,8 +137,9 @@ class IndexController extends AbstractActionController {
 
 // about category
         public function newcategoryAction() {
-        
-		return new ViewModel(array(
+           
+            return new ViewModel(array(
+                        'categories' => $this->getEntityManager()->getRepository('\KJ\Entity\BCategory')->findAll(),
 			'submitText' => 'Save'
 		));
 	}  
@@ -147,30 +155,70 @@ class IndexController extends AbstractActionController {
     
 // about subject      
         public function newSubjectAction() {
-        $category = $this->getEntityManager()->getRepository('\KJ\Entity\BCategory')->findAll();
-		return new ViewModel(array(
-			'submitText' => 'Save',
-                        'category'=>$category
-		));
+            $id = $this->params('id');
+          
+            $form = new SubjectForm();
+        $form->get('submit')->setValue('Add');
+        $request = $this->getRequest(); 
+        if ($request->isPost()) {
+            $subject = new Subject();
+            
+            $form->setInputFilter($subject->getInputFilter());
+            $form->setData($request->getPost());
+           
+           if ($form->isValid()) {
+               
+                $subject->exchangeArray($form->getData());
+                $this->getSubjectTable()->saveSubject($subject);
+                // Redirect to list of Subject again
+               // return $this->redirect()->toRoute('subject');
+            }
+        }
+        
+        return array(
+            'form' => $form,
+             'id' => $id,
+            'categories' =>$this->getEntityManager()->getRepository('\KJ\Entity\BCategory')->findAll()
+            
+            );
 	}
+        
+          public function getSubjectTable()
+          {
+                if (!$this->subjectTable) {
+                    $sm = $this->getServiceLocator();
+                    $this->subjectTable = $sm->get('KJ\Model\SubjectTable');
+                }
+            return $this->subjectTable;
+        }  
+  
         public function createSubjectFormAction(){
-            $post = $this->getRequest()->getPost();
-            $category = $this->getEntityManager()->find('\KJ\Entity\BCategory', $post->cat_id);
+         
+       $form = new SubjectForm();
+        $form->get('submit')->setValue('Add');
+        $request = $this->getRequest(); 
+        if ($request->isPost()) {
+            $subject = new Subject();
             
-            $sub = new \KJ\Entity\BSubject();
-            $sub->setSubName($post->sub_name);	                     
-              
-            $catsub = new \KJ\Entity\BCatsubject();  
-            $catsub ->setCat($category); 
-            $catsub->setSub($sub);     
-            
-            $this->getEntityManager()->persist($sub);
-            $this->getEntityManager()->persist($catsub); 
-            $this->getEntityManager()->flush();       
-        //    return $this->redirect()->toRoute('home');           			
-	}
+            $form->setInputFilter($subject->getInputFilter());
+            $form->setData($request->getPost());
+           if ($form->isValid()) {
+                $subject->exchangeArray($form->getData());
+                $this->getSubjectTable()->saveSubject($subject);
+                // Redirect to list of Subject again
+                return $this->redirect()->toRoute('subject');
+               
+            }
+        }
+        return array(
+            'form' => $form,
+            'dd' =>array(
+                    'subject' => $this->getSubjectTable()->fetchAll(),
+                    'categories' =>$this->getEntityManager()->getRepository('\KJ\Entity\BCategory')->findAll()
+            )
+            );
         
-        
+        }
         
  // about company      
         public function editCompanyAction()

@@ -14,8 +14,19 @@ div.styled {
   border-color:#ff9900;
   border-style: double;
   }
+      h2 {
+	display: inline;
+	position: relative;
+	font: 50px Helvetica, Sans-Serif;
+	letter-spacing: -5px;
+	color: rgba(0,0,255,0.5); 
+}
+    h2:after {
+	position: absolute; left: 10px; top: 5px;
+	color: rgba(255,0,0,0.5);
+  
    </style>
-    
+    <div style="margin-left:50px;"><h2>Dashboard </h2></div><br />
     <div style="width: 500px; height: auto; padding: 30px; margin: 20px; " class="styled">
     <div class="widget-box">
         <div class="widget-body">
@@ -64,9 +75,9 @@ foreach ($dashboard as $das){
 		<script type="text/javascript">
 			$(function() {
 			  var data = [
-				{ label: "Administrator",  data: <?php echo $ca; ?>, color: "#AF4E96"},
-				{ label: "Company",  data: <?php echo $company ;?>, color: "#2091CF"},
-				{ label: "Job seeker",  data: <?php echo $job_seeker ;?>, color: "#68BC31"},	
+				{ label: "Administrator(<?php echo $ca; ?>)",  data: <?php echo $ca; ?>, color: "#AF4E96"},
+				{ label: "Company(<?php echo $company ;?>)",  data: <?php echo $company ;?>, color: "#2091CF"},
+				{ label: "Job seeker(<?php echo $job_seeker ;?>)",  data: <?php echo $job_seeker ;?>, color: "#68BC31"},	
 			  ];
 			
 			  var placeholder = $('#piechart-placeholder').css({'width':'90%' , 'min-height':'150px'});
