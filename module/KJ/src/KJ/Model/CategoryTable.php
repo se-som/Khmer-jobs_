@@ -163,4 +163,10 @@ class CategoryTable {
                                                         where b.cat_id = ' ".$id." '   ",  
 							\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
 }
+ public function perskill()
+  {
+      return $this->tableGateway->getAdapter()->query("select * from b_subject as b 
+                                                    ",  
+							\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+}
 }

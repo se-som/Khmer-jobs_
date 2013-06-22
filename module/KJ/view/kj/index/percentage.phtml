@@ -1,0 +1,36 @@
+<?php
+
+
+
+
+?>
+
+
+
+<form class="form-horizontal" method="post" action="<?php echo $this->url('home/action', array('action' => 'percentageForm')) ?>">
+    <fieldset>
+       <?php
+       $i=0;
+       foreach ($per as $pers){ 
+           $i++;
+    //var_dump($pers);
+           
+           ?>
+            <input type="hidden" name ="form[]"  value="1" />  
+           <input type="hidden" name ="jcat_id[]"  value=" <?php echo $pers->sub_id ?> ">     
+           <input type="hidden" name ="sub_id[]"  value=" <?php echo '12' ?> ">     
+         <div class="control-group">
+            <label class="control-label" for="inputEmail"> <?php echo $pers->sub_name ?></label>
+            <div class="controls">
+                <input type="text" name ="percentage[]" placeholder="skill name…">
+            </div>
+        </div>
+       <?php } ?>
+        <div class="control-group">
+            <label class="control-label" for="inputEmail"></label>
+            <div class="controls">
+                <button type="submit" class="btn">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

@@ -145,55 +145,47 @@ class IndexController extends AbstractActionController {
 	}  
         public function createCategoryAction()
         {
+            
             $post = $this->getRequest()->getPost();          
             $cat = new \KJ\Entity\BCategory();
             $cat->setCatName($post->cat_name);		
             $this->getEntityManager()->persist($cat);
             $this->getEntityManager()->flush();       
-          //  return $this->redirect()->toRoute('home'); 
+            return $this->redirect()->toRoute('home'); 
         }       
     
 // about subject      
         public function newSubjectAction() {
             $id = $this->params('id');
             $form = new SubjectForm();
-        $form->get('submit')->setValue('Add');
-        $request = $this->getRequest(); 
-        if ($request->isPost()) {
-            $subject = new Subject();
-            
-            $form->setInputFilter($subject->getInputFilter());
-            $form->setData($request->getPost());
-           
-           if ($form->isValid()) {
-               
-                $subject->exchangeArray($form->getData());
-                $this->getSubjectTable()->saveSubject($subject);
-                if(true){
-                    $form = new SubjectForm();
-                    $id=$this->getRequest()->getPost('cat_id');
-                    return array(
-                         'form' => $form,
-                          'id' => $id,
-                          'subjects' => $this->getCategoryTable()->skill($id),
-                        //  'subjects' => $this->getSubjectTable()->fetchAll(),
-                       //   'categories' =>$this->getEntityManager()->getRepository('\KJ\Entity\BCategory')->findAll()
-                    );
+            $form->get('submit')->setValue('Add');
+            $request = $this->getRequest(); 
+            if ($request->isPost()) {
+                $subject = new Subject();
+                $form->setInputFilter($subject->getInputFilter());
+                $form->setData($request->getPost());
+                if ($form->isValid()) {
+                    $subject->exchangeArray($form->getData());
+                    $this->getSubjectTable()->saveSubject($subject);
+                    if(true){
+                        $form = new SubjectForm();
+                        $id=$this->getRequest()->getPost('cat_id');
+                        return array(
+                            'form' => $form,
+                            'id' => $id,
+                            'subjects' => $this->getCategoryTable()->skill($id)
+                        );
+                    }
                 }
             }
-        }
-        
-        return array(
-            'form' => $form,
-            'id' => $id,
-            'subjects' => $this->getCategoryTable()->skill($id),
-          //  'subjects' => $this->getSubjectTable()->fetchAll(),
-         //   'categories' =>$this->getEntityManager()->getRepository('\KJ\Entity\BCategory')->findAll()
-            
+            return array(
+                'form' => $form,
+                'id' => $id,
+                'subjects' => $this->getCategoryTable()->skill($id)
             );
 	}
         
-          public function getSubjectTable()
+         public function getSubjectTable()
           {
                 if (!$this->subjectTable) {
                     $sm = $this->getServiceLocator();
@@ -271,6 +263,62 @@ class IndexController extends AbstractActionController {
 			//	$this->redirect()->toRoute('home');
 			}
            }
+        }
+        //function percentage
+        public function percentageAction(){
+            return array(
+            'per' => $this->getCategoryTable()->perskill(),
+                );
+        }
+        public function percentageFormAction(){
+          //  var_dump($_POST['percentage']);
+//            foreach($_POST['jcat_id'] as $value) {
+//                var_dump($value);
+//            }
+//            foreach($_POST['sub_id'] as $valu) {
+//                var_dump($valu);
+//            }
+      //  foreach ($_POST['percentage'] as $va){
+//            $id=$this->getRequest()->getPost();
+//            for($i=0;count($id['form'])>$i;$i++){
+//                echo $id['jcat_id'][$i];
+//                echo $id['sub_id'][$i];
+//                echo $id['percentage'][$i].'<br/>';
+//            }
+       
+             
+                 
+$ii = 3;
+                $post = $this->getRequest()->getPost();  
+                $cate = $this->getEntityManager()->find('\KJ\Entity\BJobCategory', $post); 
+                
+                $cat = new \KJ\Entity\BPercentage();
+            //    var_dump($cat);
+            //     $ca = new \KJ\Entity\BSubject();
+              //   var_dump($cat);
+                
+            //     $jcat = new \KJ\Entity\BJobCategory(); 
+            //     var_dump($jcat);
+               
+                
+               $cat->setPercentage('gftt');
+         //        var_dump($cat);
+                  
+                 
+          //        $cat->seSub($cs); 
+          //     $cat->setJcat($cate);
+         //       var_dump($cat);
+                $cat->setJcat($cate);
+                    var_dump($cat);
+                    
+    //                 $cat->setJcat($cs);
+           //      $jcat->setJcat('13');
+           //        var_dump($cat);
+          //      $this->getEntityManager()->persist($cat);
+        //        $this->getEntityManager()->flush();  
+                
+         //   }
+           // echo $i;
         }
 
         /**
