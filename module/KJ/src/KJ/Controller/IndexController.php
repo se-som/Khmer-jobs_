@@ -156,7 +156,6 @@ class IndexController extends AbstractActionController {
 // about subject      
         public function newSubjectAction() {
             $id = $this->params('id');
-          
             $form = new SubjectForm();
         $form->get('submit')->setValue('Add');
         $request = $this->getRequest(); 
@@ -170,15 +169,26 @@ class IndexController extends AbstractActionController {
                
                 $subject->exchangeArray($form->getData());
                 $this->getSubjectTable()->saveSubject($subject);
-                // Redirect to list of Subject again
-               // return $this->redirect()->toRoute('subject');
+                if(true){
+                    $form = new SubjectForm();
+                    $id=$this->getRequest()->getPost('cat_id');
+                    return array(
+                         'form' => $form,
+                          'id' => $id,
+                          'subjects' => $this->getCategoryTable()->skill($id),
+                        //  'subjects' => $this->getSubjectTable()->fetchAll(),
+                       //   'categories' =>$this->getEntityManager()->getRepository('\KJ\Entity\BCategory')->findAll()
+                    );
+                }
             }
         }
         
         return array(
             'form' => $form,
-             'id' => $id,
-            'categories' =>$this->getEntityManager()->getRepository('\KJ\Entity\BCategory')->findAll()
+            'id' => $id,
+            'subjects' => $this->getCategoryTable()->skill($id),
+          //  'subjects' => $this->getSubjectTable()->fetchAll(),
+         //   'categories' =>$this->getEntityManager()->getRepository('\KJ\Entity\BCategory')->findAll()
             
             );
 	}
@@ -266,7 +276,8 @@ class IndexController extends AbstractActionController {
         /**
 	 * Entity manager instance
 	 *           
-	 * @var Doctrine\ORM\EntityManager
+	 * @var 
+         * 
 	 */
 	protected $em;
 

@@ -156,4 +156,11 @@ class CategoryTable {
       }
       return $jj;
   }
+  //function select skill
+    public function skill($id)
+  {
+      return $this->tableGateway->getAdapter()->query("select * from b_subject as b 
+                                                        where b.cat_id = ' ".$id." '   ",  
+							\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+}
 }
