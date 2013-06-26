@@ -22,15 +22,31 @@
          <div class="control-group">
             <label class="control-label" for="inputEmail"> <?php echo $pers->sub_name ?></label>
             <div class="controls">
-                <input type="text" name ="percentage[]" placeholder="skill name…">
+                <input type="text" name ="percentage[]" placeholder="value…">
             </div>
         </div>
        <?php } ?>
         <div class="control-group">
             <label class="control-label" for="inputEmail"></label>
             <div class="controls">
-                <button type="submit" class="btn">Submit</button>
+                <button type="submit" class="btn btn-success">Submit</button>
             </div>
         </div>
     </fieldset>
 </form>
+
+<div class="alert alert-block alert-error">
+     <a class="close" data-dismiss="alert" href="#">X</a>
+     <h4 class="alert-heading">Error!</h4>
+       Please try again...
+</div>
+<div class="alert alert-block alert-success">
+     <a class="close" data-dismiss="alert" href="#">X</a>
+     <h4 class="alert-heading">Success!</h4>
+     You hade successfully submitted.
+</div>
+<div class="alert alert-block alert-info">
+     <a class="close" data-dismiss="alert" href="#">X</a>
+     <h4 class="alert-heading">Info</h4>
+     This is some informational text...
+</div>

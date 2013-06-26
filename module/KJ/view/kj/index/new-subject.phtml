@@ -1,25 +1,25 @@
+<?php 
+// module/Job/view/Job/Subject/add.phtml
 
-<?php
-// module/Job/view/Job/Subject/add.phtml:
+//This for alert succussful 
+if($message!= NULL){
+echo $message;
+}
+
+//Lits subjects or skills
 $ids = $id;
-//echo $ids. '<br />';
-//var_dump($subjects);
 echo '<table class="table table-striped table-hover">';
 foreach ($subjects as $su){ 
     $cat_id = $this->escapeHtml($su->cat_id);
- // echo $cat_id. '<br />';
-   // if($ids == $cat_id){
     ?>
     <tr>
     <td><?php echo $this->escapeHtml($su->sub_id);?></td>
     <td><?php echo $this->escapeHtml($su->sub_name);?></td>
     </tr>
     <?php
- //  } 
 }
 echo '</table>';
-
-
+// form add new skill
 $title = 'Add new subject';
 $this->headTitle($title);
 ?>
@@ -32,7 +32,6 @@ echo '<div class="label">';
 echo '<h2 class ="ui-widget-header">';
     echo $this->escapeHtml($title);
 echo '</h2>';
-//echo'<form class="form-horizontal">';
 echo $this->form()->openTag($form);
 
  echo '<div class="control-group">';

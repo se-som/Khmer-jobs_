@@ -60,9 +60,8 @@ class IndexController extends AbstractActionController {
                     $this->getEntityManager()->persist($jcat);           
                     $this->getEntityManager()->persist($job);   
                     $this->getEntityManager()->flush();
-                    return $this->redirect()->toUrl('/index?sess='.$sess); 
+                   return $this->redirect()->toUrl('/index?sess='.$sess.'&msg=2');
                 }   
-               
 		return new ViewModel(array(
 				'categories' => $this->getEntityManager()->getRepository('\KJ\Entity\BCategory')->findAll(),
                                 'com' => $this->getCategoryTable()->findAll4($sess)
@@ -170,7 +169,12 @@ class IndexController extends AbstractActionController {
                     if(true){
                         $form = new SubjectForm();
                         $id=$this->getRequest()->getPost('cat_id');
+                        $message = '<div class="alert alert-block alert-success">
+                                    <a class="close" data-dismiss="alert" href="#">X</a>
+                                    <h4 class="alert-heading">Success!</h4>
+                                    You hade successfully submitted.</div>';
                         return array(
+                            'message' => $message,
                             'form' => $form,
                             'id' => $id,
                             'subjects' => $this->getCategoryTable()->skill($id)
@@ -179,6 +183,7 @@ class IndexController extends AbstractActionController {
                 }
             }
             return array(
+                'message' => NULL,
                 'form' => $form,
                 'id' => $id,
                 'subjects' => $this->getCategoryTable()->skill($id)
@@ -271,6 +276,7 @@ class IndexController extends AbstractActionController {
                 );
         }
         public function percentageFormAction(){
+           
           //  var_dump($_POST['percentage']);
 //            foreach($_POST['jcat_id'] as $value) {
 //                var_dump($value);
@@ -290,7 +296,8 @@ class IndexController extends AbstractActionController {
                  
 $ii = 3;
                 $post = $this->getRequest()->getPost();  
-                $cate = $this->getEntityManager()->find('\KJ\Entity\BJobCategory', $post); 
+                
+                $cate = $this->getEntityManager()->find('\KJ\Entity\BJobCategory', $post->jcat_id); 
                 
                 $cat = new \KJ\Entity\BPercentage();
             //    var_dump($cat);
