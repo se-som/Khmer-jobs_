@@ -1,11 +1,6 @@
 <?php
 
-
-
-
 ?>
-
-
 
 <form class="form-horizontal" method="post" action="<?php echo $this->url('home/action', array('action' => 'percentageForm')) ?>">
     <fieldset>
@@ -13,8 +8,7 @@
        $i=0;
        foreach ($per as $pers){ 
            $i++;
-    //var_dump($pers);
-           
+ 
            ?>
             <input type="hidden" name ="form[]"  value="1" />  
            <input type="hidden" name ="jcat_id[]"  value=" <?php echo $pers->sub_id ?> ">     
@@ -50,3 +44,4 @@
      <h4 class="alert-heading">Info</h4>
      This is some informational text...
 </div>
+
