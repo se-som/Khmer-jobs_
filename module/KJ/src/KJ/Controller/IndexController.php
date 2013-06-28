@@ -284,50 +284,38 @@ class IndexController extends AbstractActionController {
 //            foreach($_POST['sub_id'] as $valu) {
 //                var_dump($valu);
 //            }
-      //  foreach ($_POST['percentage'] as $va){
-//            $id=$this->getRequest()->getPost();
-//            for($i=0;count($id['form'])>$i;$i++){
-//                echo $id['jcat_id'][$i];
-//                echo $id['sub_id'][$i];
-//                echo $id['percentage'][$i].'<br/>';
-//            }
-       
-             
-                 
-$ii = 3;
-                $post = $this->getRequest()->getPost();  
-                
-                $cate = $this->getEntityManager()->find('\KJ\Entity\BJobCategory', $post->jcat_id); 
-                
-                $cat = new \KJ\Entity\BPercentage();
-            //    var_dump($cat);
-            //     $ca = new \KJ\Entity\BSubject();
-              //   var_dump($cat);
-                
-            //     $jcat = new \KJ\Entity\BJobCategory(); 
-            //     var_dump($jcat);
-               
-                
-               $cat->setPercentage('gftt');
-         //        var_dump($cat);
-                  
-                 
-          //        $cat->seSub($cs); 
-          //     $cat->setJcat($cate);
-         //       var_dump($cat);
-                $cat->setJcat($cate);
-                    var_dump($cat);
-                    
-    //                 $cat->setJcat($cs);
-           //      $jcat->setJcat('13');
-           //        var_dump($cat);
-          //      $this->getEntityManager()->persist($cat);
-        //        $this->getEntityManager()->flush();  
-                
-         //   }
-           // echo $i;
-        }
+ //      foreach ($_POST['percentage'] as $va){
+            $id=$this->getRequest()->getPost();
+            for($i=0;count($id['form'])>$i;$i++){
+                $jcat= $id['jcat_id'][$i];
+           //     $subs=$id['sub_id'][$i];
+            //    $per=$id['percentage'][$i];
+                $jcates = (int)$jcat;
+                echo $jcates;
+//                $su = (int)$subs;
+//                $pers = (int)$per;
 
+//    echo $subs;
+//    echo $per;
+//    echo '<br />';
+               // $post = $this->getRequest()->getPost();  
+                
+          //    $ss= '12'; 
+      //  $jcates =(int)$ss;
+
+               $cate = $this->getEntityManager()->find('\KJ\Entity\BJobCategory', $jcates); 
+               var_dump($cate);
+//                $sub = $this->getEntityManager()->find('\KJ\Entity\BSubject', $su);
+//           
+//                $cat = new \KJ\Entity\BPercentage();    
+//                $cat->setPercentage($pers);
+//                $cat->setJcat($cate);
+//                $cat->setSub($sub);
+//
+//                $this->getEntityManager()->persist($cat);
+//                $this->getEntityManager()->flush(); 
+            }
+        }
         /**
 	 * Entity manager instance
 	 *           
